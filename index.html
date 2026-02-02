@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pic2PDF</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="hero">
+        <h1>Pic2PDF</h1>
+        <p>Convert JPG/PNG images into a single PDF — 100% in your browser.</p>
+      </header>
+
+      <section class="panel">
+        <div class="controls">
+          <label class="file-btn">
+            <input id="fileInput" type="file" accept="image/png,image/jpeg" multiple />
+            Add images
+          </label>
+          <div class="select">
+            <label for="downscale">Downscale</label>
+            <select id="downscale">
+              <option value="0">Original</option>
+              <option value="3000">Max 3000px</option>
+              <option value="2000" selected>Max 2000px</option>
+              <option value="1200">Max 1200px</option>
+            </select>
+          </div>
+          <button id="exportBtn" class="primary" disabled>Export PDF</button>
+          <button id="clearBtn" class="ghost" disabled>Clear</button>
+        </div>
+
+        <div id="dropZone" class="drop">
+          <p>Drop images here or click “Add images”.</p>
+          <p class="hint">Drag to reorder. Supported: JPG, PNG.</p>
+        </div>
+
+        <ul id="list" class="list" aria-live="polite"></ul>
+
+        <div class="status">
+          <span id="count">0 images</span>
+          <span id="status"></span>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <p>Runs locally in your browser — no uploads.</p>
+      </footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
