@@ -121,7 +121,7 @@ function renderList() {
 
     const meta = document.createElement("div");
     meta.className = "meta";
-    meta.innerHTML = `<strong>${index + 1}. ${item.name}</strong><small>${item.width}×${item.height}px</small>`;
+    meta.innerHTML = `<strong title=\"${item.width}×${item.height}px\">${index + 1}. ${item.name}</strong>`;
 
     const actions = document.createElement("div");
     actions.className = "actions";
