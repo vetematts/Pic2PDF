@@ -105,6 +105,21 @@ body {
   color: var(--muted);
 }
 
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  user-select: none;
+}
+
+.toggle input {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--accent);
+}
+
 select {
   padding: 6px 8px;
   border-radius: 7px;
