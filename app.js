@@ -5,6 +5,8 @@ const list = document.getElementById("list");
 const exportBtn = document.getElementById("exportBtn");
 const clearBtn = document.getElementById("clearBtn");
 const downscaleSelect = document.getElementById("downscale");
+const pageSizeSelect = document.getElementById("pageSize");
+const fitModeSelect = document.getElementById("fitMode");
 const showSizesToggle = document.getElementById("showSizes");
 const countLabel = document.getElementById("count");
 const statusLabel = document.getElementById("status");
@@ -66,8 +68,17 @@ exportBtn.addEventListener("click", async () => {
         : await pdfDoc.embedJpg(bytes);
 
       const { width, height } = embed.size();
-      const page = pdfDoc.addPage([width, height]);
-      page.drawImage(embed, { x: 0, y: 0, width, height });
+      const pageSize = getPageSize(pageSizeSelect.value, width, height);
+      const page = pdfDoc.addPage([pageSize.width, pageSize.height]);
+      const placement = getPlacement(
+        pageSize.width,
+        pageSize.height,
+        width,
+        height,
+        fitModeSelect.value
+      );
+
+      page.drawImage(embed, placement);
       statusLabel.textContent = `Added ${i + 1} / ${items.length}`;
       await new Promise((r) => setTimeout(r, 0));
     }
@@ -184,6 +195,32 @@ function updateUI() {
   countLabel.textContent = `${items.length} image${items.length === 1 ? "" : "s"}`;
   exportBtn.disabled = items.length === 0;
   clearBtn.disabled = items.length === 0;
+}
+
+function getPageSize(mode, imgWidth, imgHeight) {
+  if (mode === "a4") {
+    return { width: 595.28, height: 841.89 };
+  }
+  if (mode === "letter") {
+    return { width: 612, height: 792 };
+  }
+  return { width: imgWidth, height: imgHeight };
+}
+
+function getPlacement(pageWidth, pageHeight, imgWidth, imgHeight, fitMode) {
+  if (pageWidth === imgWidth && pageHeight === imgHeight) {
+    return { x: 0, y: 0, width: imgWidth, height: imgHeight };
+  }
+
+  const scaleX = pageWidth / imgWidth;
+  const scaleY = pageHeight / imgHeight;
+  const scale = fitMode === "cover" ? Math.max(scaleX, scaleY) : Math.min(scaleX, scaleY);
+  const width = imgWidth * scale;
+  const height = imgHeight * scale;
+  const x = (pageWidth - width) / 2;
+  const y = (pageHeight - height) / 2;
+
+  return { x, y, width, height };
 }
 
 function fileToDataUrl(file) {
