@@ -10,6 +10,8 @@ const fitModeSelect = document.getElementById("fitMode");
 const showSizesToggle = document.getElementById("showSizes");
 const countLabel = document.getElementById("count");
 const statusLabel = document.getElementById("status");
+const progress = document.getElementById("progress");
+const dismissStatusBtn = document.getElementById("dismissStatus");
 
 const items = [];
 let dragId = null;
@@ -40,6 +42,7 @@ dropZone.addEventListener("drop", (event) => {
 clearBtn.addEventListener("click", () => {
   items.length = 0;
   list.innerHTML = "";
+  clearStatus();
   updateUI();
 });
 
@@ -47,11 +50,19 @@ showSizesToggle.addEventListener("change", () => {
   renderList();
 });
 
+dismissStatusBtn.addEventListener("click", () => {
+  clearStatus();
+});
+
 exportBtn.addEventListener("click", async () => {
   if (!items.length) return;
   exportBtn.disabled = true;
   clearBtn.disabled = true;
   statusLabel.textContent = "Building PDF...";
+  progress.hidden = false;
+  progress.max = items.length;
+  progress.value = 0;
+  dismissStatusBtn.hidden = true;
 
   try {
     const pdfDoc = await PDFLib.PDFDocument.create();
@@ -80,15 +91,18 @@ exportBtn.addEventListener("click", async () => {
 
       page.drawImage(embed, placement);
       statusLabel.textContent = `Added ${i + 1} / ${items.length}`;
+      progress.value = i + 1;
       await new Promise((r) => setTimeout(r, 0));
     }
 
     const pdfBytes = await pdfDoc.save();
     downloadBlob(new Blob([pdfBytes], { type: "application/pdf" }), "pic2pdf.pdf");
-    statusLabel.textContent = "Done!";
+    statusLabel.textContent = "Done! PDF downloaded.";
+    dismissStatusBtn.hidden = false;
   } catch (error) {
     console.error(error);
     statusLabel.textContent = "Failed to export.";
+    dismissStatusBtn.hidden = false;
   } finally {
     exportBtn.disabled = items.length === 0;
     clearBtn.disabled = items.length === 0;
@@ -103,7 +117,12 @@ async function handleFiles(fileList) {
   if (!files.length) return;
 
   statusLabel.textContent = "Loading images...";
+  progress.hidden = false;
+  progress.max = files.length;
+  progress.value = 0;
+  dismissStatusBtn.hidden = true;
 
+  let loaded = 0;
   for (const file of files) {
     const dataUrl = await fileToDataUrl(file);
     const dims = await getImageSize(dataUrl);
@@ -115,10 +134,13 @@ async function handleFiles(fileList) {
       width: dims.width,
       height: dims.height,
     });
+    loaded += 1;
+    progress.value = loaded;
   }
 
   renderList();
-  statusLabel.textContent = "";
+  statusLabel.textContent = `Loaded ${files.length} image${files.length === 1 ? "" : "s"}.`;
+  dismissStatusBtn.hidden = false;
 }
 
 function renderList() {
@@ -149,6 +171,24 @@ function renderList() {
     dragHandle.textContent = "↕";
     dragHandle.title = "Drag to reorder";
 
+    const moveUpBtn = document.createElement("button");
+    moveUpBtn.className = "ghost small";
+    moveUpBtn.textContent = "Up";
+    moveUpBtn.title = "Move up";
+    moveUpBtn.disabled = index === 0;
+    moveUpBtn.addEventListener("click", () => {
+      moveItem(index, index - 1);
+    });
+
+    const moveDownBtn = document.createElement("button");
+    moveDownBtn.className = "ghost small";
+    moveDownBtn.textContent = "Down";
+    moveDownBtn.title = "Move down";
+    moveDownBtn.disabled = index === items.length - 1;
+    moveDownBtn.addEventListener("click", () => {
+      moveItem(index, index + 1);
+    });
+
     const removeBtn = document.createElement("button");
     removeBtn.className = "remove";
     removeBtn.textContent = "Remove";
@@ -160,7 +200,7 @@ function renderList() {
       }
     });
 
-    actions.append(dragHandle, removeBtn);
+    actions.append(dragHandle, moveUpBtn, moveDownBtn, removeBtn);
     li.append(img, meta, actions);
     list.append(li);
 
@@ -195,6 +235,20 @@ function updateUI() {
   countLabel.textContent = `${items.length} image${items.length === 1 ? "" : "s"}`;
   exportBtn.disabled = items.length === 0;
   clearBtn.disabled = items.length === 0;
+}
+
+function moveItem(from, to) {
+  if (to < 0 || to >= items.length || from === to) return;
+  const [moved] = items.splice(from, 1);
+  items.splice(to, 0, moved);
+  renderList();
+}
+
+function clearStatus() {
+  statusLabel.textContent = "";
+  progress.value = 0;
+  progress.hidden = true;
+  dismissStatusBtn.hidden = true;
 }
 
 function getPageSize(mode, imgWidth, imgHeight) {

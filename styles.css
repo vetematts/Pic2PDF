@@ -261,9 +261,44 @@ button:disabled {
 .status {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 10px;
   font-size: 0.85rem;
   color: var(--muted);
+}
+
+.status-left,
+.status-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+progress {
+  width: 120px;
+  height: 8px;
+  appearance: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--soft);
+  overflow: hidden;
+}
+
+progress::-webkit-progress-bar {
+  background: var(--soft);
+}
+
+progress::-webkit-progress-value {
+  background: var(--accent);
+}
+
+progress::-moz-progress-bar {
+  background: var(--accent);
+}
+
+.small {
+  padding: 6px 8px;
+  font-size: 0.75rem;
 }
 
 .foot {
@@ -292,5 +327,11 @@ button:active:not(:disabled),
   .actions {
     grid-column: 1 / -1;
     justify-content: flex-end;
+  }
+
+  .status {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
   }
 }
