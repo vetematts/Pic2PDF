@@ -70,9 +70,12 @@ exportBtn.addEventListener("click", async () => {
 
     for (let i = 0; i < items.length; i += 1) {
       const item = items[i];
-      const dataUrl = maxDim
-        ? await downscaleImage(item.dataUrl, maxDim, item.type)
+      const rotatedUrl = item.rotation
+        ? await rotateImage(item.dataUrl, item.rotation, item.type)
         : item.dataUrl;
+      const dataUrl = maxDim
+        ? await downscaleImage(rotatedUrl, maxDim, item.type)
+        : rotatedUrl;
       const bytes = await dataUrlToBytes(dataUrl);
       const embed = item.type === "image/png"
         ? await pdfDoc.embedPng(bytes)
@@ -133,6 +136,7 @@ async function handleFiles(fileList) {
       dataUrl,
       width: dims.width,
       height: dims.height,
+      rotation: 0,
     });
     loaded += 1;
     progress.value = loaded;
@@ -156,10 +160,16 @@ function renderList() {
     img.src = item.dataUrl;
     img.alt = item.name;
     img.className = "thumb";
+    if (item.rotation) {
+      img.style.transform = `rotate(${item.rotation}deg)`;
+    } else {
+      img.style.transform = "";
+    }
 
     const meta = document.createElement("div");
     meta.className = "meta";
-    const sizes = `${item.width}×${item.height}px`;
+    const dims = getRotatedDims(item);
+    const sizes = `${dims.width}×${dims.height}px`;
     const sizeMarkup = showSizesToggle.checked ? `<small>${sizes}</small>` : "";
     meta.innerHTML = `<strong title=\"${sizes}\">${index + 1}. ${item.name}</strong>${sizeMarkup}`;
 
@@ -170,6 +180,24 @@ function renderList() {
     dragHandle.className = "drag-handle";
     dragHandle.textContent = "↕";
     dragHandle.title = "Drag to reorder";
+
+    const rotateLeftBtn = document.createElement("button");
+    rotateLeftBtn.className = "ghost small";
+    rotateLeftBtn.textContent = "⟲";
+    rotateLeftBtn.title = "Rotate left";
+    rotateLeftBtn.addEventListener("click", () => {
+      item.rotation = (item.rotation - 90 + 360) % 360;
+      renderList();
+    });
+
+    const rotateRightBtn = document.createElement("button");
+    rotateRightBtn.className = "ghost small";
+    rotateRightBtn.textContent = "⟳";
+    rotateRightBtn.title = "Rotate right";
+    rotateRightBtn.addEventListener("click", () => {
+      item.rotation = (item.rotation + 90) % 360;
+      renderList();
+    });
 
     const moveUpBtn = document.createElement("button");
     moveUpBtn.className = "ghost small";
@@ -200,7 +228,7 @@ function renderList() {
       }
     });
 
-    actions.append(dragHandle, moveUpBtn, moveDownBtn, removeBtn);
+    actions.append(dragHandle, rotateLeftBtn, rotateRightBtn, moveUpBtn, moveDownBtn, removeBtn);
     li.append(img, meta, actions);
     list.append(li);
 
@@ -235,6 +263,13 @@ function updateUI() {
   countLabel.textContent = `${items.length} image${items.length === 1 ? "" : "s"}`;
   exportBtn.disabled = items.length === 0;
   clearBtn.disabled = items.length === 0;
+}
+
+function getRotatedDims(item) {
+  if (item.rotation % 180 === 0) {
+    return { width: item.width, height: item.height };
+  }
+  return { width: item.height, height: item.width };
 }
 
 function moveItem(from, to) {
@@ -313,6 +348,32 @@ async function downscaleImage(dataUrl, maxDim, type) {
   const ctx = canvas.getContext("2d");
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
+  return canvasToDataUrl(canvas, type, 0.92);
+}
+
+async function rotateImage(dataUrl, degrees, type) {
+  const img = await new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = dataUrl;
+  });
+
+  const radians = (degrees * Math.PI) / 180;
+  const isRightAngle = Math.abs(degrees) % 180 !== 0;
+  const canvas = document.createElement("canvas");
+  canvas.width = isRightAngle ? img.naturalHeight : img.naturalWidth;
+  canvas.height = isRightAngle ? img.naturalWidth : img.naturalHeight;
+
+  const ctx = canvas.getContext("2d");
+  ctx.translate(canvas.width / 2, canvas.height / 2);
+  ctx.rotate(radians);
+  ctx.drawImage(img, -img.naturalWidth / 2, -img.naturalHeight / 2);
+
+  return canvasToDataUrl(canvas, type, 0.92);
+}
+
+function canvasToDataUrl(canvas, type, quality) {
   return new Promise((resolve) => {
     canvas.toBlob(
       (blob) => {
@@ -321,7 +382,7 @@ async function downscaleImage(dataUrl, maxDim, type) {
         reader.readAsDataURL(blob);
       },
       type,
-      0.92
+      quality
     );
   });
 }

@@ -226,6 +226,7 @@ button:disabled {
   object-fit: cover;
   border-radius: 7px;
   border: 1px solid var(--border);
+  transition: transform 0.12s ease;
 }
 
 .meta {
