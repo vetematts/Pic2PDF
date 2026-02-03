@@ -9,32 +9,33 @@
   <body>
     <main class="wrap">
       <header class="hero">
-        <h1>Pic2PDF</h1>
-        <p>Convert JPG/PNG images into a single PDF — 100% in your browser.</p>
+        <div class="brand">
+          <span class="badge">P2P</span>
+          <h1>Pic2PDF</h1>
+        </div>
+        <p>JPG/PNG to a single PDF. No uploads.</p>
       </header>
 
       <section class="panel">
-        <div class="controls">
+        <div id="dropZone" class="drop">
           <label class="file-btn">
             <input id="fileInput" type="file" accept="image/png,image/jpeg" multiple />
-            Add images
+            Upload images
           </label>
-          <div class="select">
-            <label for="downscale">Downscale</label>
-            <select id="downscale">
-              <option value="0">Original</option>
-              <option value="3000">Max 3000px</option>
-              <option value="2000" selected>Max 2000px</option>
-              <option value="1200">Max 1200px</option>
-            </select>
+          <p class="hint">Click or drag and drop. Reorder by dragging.</p>
+          <div class="controls">
+            <div class="select">
+              <label for="downscale">Downscale</label>
+              <select id="downscale">
+                <option value="0">Original</option>
+                <option value="3000">Max 3000px</option>
+                <option value="2000" selected>Max 2000px</option>
+                <option value="1200">Max 1200px</option>
+              </select>
+            </div>
+            <button id="exportBtn" class="primary" disabled>Export PDF</button>
+            <button id="clearBtn" class="ghost" disabled>Clear</button>
           </div>
-          <button id="exportBtn" class="primary" disabled>Export PDF</button>
-          <button id="clearBtn" class="ghost" disabled>Clear</button>
-        </div>
-
-        <div id="dropZone" class="drop">
-          <p>Drop images here or click “Add images”.</p>
-          <p class="hint">Drag to reorder. Supported: JPG, PNG.</p>
         </div>
 
         <ul id="list" class="list" aria-live="polite"></ul>
@@ -46,7 +47,7 @@
       </section>
 
       <footer class="foot">
-        <p>Runs locally in your browser — no uploads.</p>
+        <p>Runs locally in your browser.</p>
       </footer>
     </main>
 
