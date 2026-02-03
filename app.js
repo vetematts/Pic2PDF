@@ -5,6 +5,8 @@ const list = document.getElementById("list");
 const exportBtn = document.getElementById("exportBtn");
 const clearBtn = document.getElementById("clearBtn");
 const downscaleSelect = document.getElementById("downscale");
+const qualityRange = document.getElementById("quality");
+const qualityValue = document.getElementById("qualityValue");
 const pageSizeSelect = document.getElementById("pageSize");
 const fitModeSelect = document.getElementById("fitMode");
 const showSizesToggle = document.getElementById("showSizes");
@@ -12,9 +14,11 @@ const countLabel = document.getElementById("count");
 const statusLabel = document.getElementById("status");
 const progress = document.getElementById("progress");
 const dismissStatusBtn = document.getElementById("dismissStatus");
+const estimateLabel = document.getElementById("estimate");
 
 const items = [];
 let dragId = null;
+let estimateToken = 0;
 
 fileInput.addEventListener("change", (event) => {
   handleFiles(event.target.files);
@@ -50,6 +54,18 @@ showSizesToggle.addEventListener("change", () => {
   renderList();
 });
 
+qualityRange.addEventListener("input", () => {
+  qualityValue.textContent = Number(qualityRange.value).toFixed(2);
+});
+
+qualityRange.addEventListener("change", () => {
+  scheduleEstimate();
+});
+
+downscaleSelect.addEventListener("change", () => {
+  scheduleEstimate();
+});
+
 dismissStatusBtn.addEventListener("click", () => {
   clearStatus();
 });
@@ -67,15 +83,14 @@ exportBtn.addEventListener("click", async () => {
   try {
     const pdfDoc = await PDFLib.PDFDocument.create();
     const maxDim = Number(downscaleSelect.value);
+    const quality = Number(qualityRange.value);
 
     for (let i = 0; i < items.length; i += 1) {
       const item = items[i];
       const rotatedUrl = item.rotation
         ? await rotateImage(item.dataUrl, item.rotation, item.type)
         : item.dataUrl;
-      const dataUrl = maxDim
-        ? await downscaleImage(rotatedUrl, maxDim, item.type)
-        : rotatedUrl;
+      const dataUrl = await processImage(rotatedUrl, maxDim, item.type, quality);
       const bytes = await dataUrlToBytes(dataUrl);
       const embed = item.type === "image/png"
         ? await pdfDoc.embedPng(bytes)
@@ -145,6 +160,7 @@ async function handleFiles(fileList) {
   renderList();
   statusLabel.textContent = `Loaded ${files.length} image${files.length === 1 ? "" : "s"}.`;
   dismissStatusBtn.hidden = false;
+  scheduleEstimate();
 }
 
 function renderList() {
@@ -257,6 +273,7 @@ function renderList() {
   });
 
   updateUI();
+  scheduleEstimate();
 }
 
 function updateUI() {
@@ -284,6 +301,39 @@ function clearStatus() {
   progress.value = 0;
   progress.hidden = true;
   dismissStatusBtn.hidden = true;
+}
+
+function scheduleEstimate() {
+  estimateToken += 1;
+  const token = estimateToken;
+  estimateLabel.textContent = "Estimated: …";
+  setTimeout(() => {
+    if (token !== estimateToken) return;
+    estimateTotalBytes(token);
+  }, 120);
+}
+
+async function estimateTotalBytes(token) {
+  if (!items.length) {
+    estimateLabel.textContent = "Estimated: --";
+    return;
+  }
+
+  const maxDim = Number(downscaleSelect.value);
+  const quality = Number(qualityRange.value);
+  let total = 0;
+
+  for (const item of items) {
+    if (token !== estimateToken) return;
+    const rotatedUrl = item.rotation
+      ? await rotateImage(item.dataUrl, item.rotation, item.type)
+      : item.dataUrl;
+    const processed = await processImage(rotatedUrl, maxDim, item.type, quality);
+    total += dataUrlSizeBytes(processed);
+    await new Promise((r) => setTimeout(r, 0));
+  }
+
+  estimateLabel.textContent = `Estimated: ${formatBytes(total)}`;
 }
 
 function getPageSize(mode, imgWidth, imgHeight) {
@@ -351,6 +401,31 @@ async function downscaleImage(dataUrl, maxDim, type) {
   return canvasToDataUrl(canvas, type, 0.92);
 }
 
+async function processImage(dataUrl, maxDim, type, quality) {
+  if (!maxDim && (quality >= 0.99 || type === "image/png")) {
+    return dataUrl;
+  }
+
+  const img = await new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = dataUrl;
+  });
+
+  const scale = maxDim
+    ? Math.min(1, maxDim / Math.max(img.naturalWidth, img.naturalHeight))
+    : 1;
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(img.naturalWidth * scale);
+  canvas.height = Math.round(img.naturalHeight * scale);
+
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+  return canvasToDataUrl(canvas, type, quality);
+}
+
 async function rotateImage(dataUrl, degrees, type) {
   const img = await new Promise((resolve, reject) => {
     const image = new Image();
@@ -385,6 +460,27 @@ function canvasToDataUrl(canvas, type, quality) {
       quality
     );
   });
+}
+
+function dataUrlSizeBytes(dataUrl) {
+  if (typeof dataUrl !== "string") return 0;
+  const commaIndex = dataUrl.indexOf(",");
+  if (commaIndex === -1) return 0;
+  const base64Length = dataUrl.length - commaIndex - 1;
+  const padding = dataUrl.endsWith("==") ? 2 : dataUrl.endsWith("=") ? 1 : 0;
+  return Math.max(0, Math.floor((base64Length * 3) / 4) - padding);
+}
+
+function formatBytes(bytes) {
+  if (bytes < 1024) return `${bytes} B`;
+  const units = ["KB", "MB", "GB"];
+  let value = bytes / 1024;
+  let unitIndex = 0;
+  while (value >= 1024 && unitIndex < units.length - 1) {
+    value /= 1024;
+    unitIndex += 1;
+  }
+  return `${value.toFixed(value < 10 ? 2 : 1)} ${units[unitIndex]}`;
 }
 
 async function dataUrlToBytes(dataUrl) {

@@ -50,6 +50,10 @@
               <option value="1200">Max 1200px</option>
             </select>
           </div>
+          <div class="select range">
+            <label for="quality">Quality <span id="qualityValue">0.9</span></label>
+            <input id="quality" type="range" min="0.6" max="1" step="0.05" value="0.9" />
+          </div>
           <label class="toggle">
             <input id="showSizes" type="checkbox" />
             <span>Show sizes</span>
@@ -64,6 +68,7 @@
           <div class="status-left">
             <span id="count">0 images</span>
             <progress id="progress" value="0" max="1" hidden></progress>
+            <span id="estimate" class="estimate">Estimated: --</span>
           </div>
           <div class="status-right">
             <span id="status"></span>
