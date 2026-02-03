@@ -117,6 +117,14 @@ body {
   color: var(--muted);
 }
 
+.select.range {
+  min-width: 140px;
+}
+
+.select.range input[type="range"] {
+  width: 140px;
+}
+
 .toggle {
   display: inline-flex;
   align-items: center;
@@ -295,6 +303,11 @@ progress::-webkit-progress-value {
 
 progress::-moz-progress-bar {
   background: var(--accent);
+}
+
+.estimate {
+  font-size: 0.78rem;
+  color: var(--muted);
 }
 
 .small {
