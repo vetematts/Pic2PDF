@@ -5,6 +5,7 @@ const list = document.getElementById("list");
 const exportBtn = document.getElementById("exportBtn");
 const clearBtn = document.getElementById("clearBtn");
 const downscaleSelect = document.getElementById("downscale");
+const showSizesToggle = document.getElementById("showSizes");
 const countLabel = document.getElementById("count");
 const statusLabel = document.getElementById("status");
 
@@ -38,6 +39,10 @@ clearBtn.addEventListener("click", () => {
   items.length = 0;
   list.innerHTML = "";
   updateUI();
+});
+
+showSizesToggle.addEventListener("change", () => {
+  renderList();
 });
 
 exportBtn.addEventListener("click", async () => {
@@ -121,7 +126,9 @@ function renderList() {
 
     const meta = document.createElement("div");
     meta.className = "meta";
-    meta.innerHTML = `<strong title=\"${item.width}×${item.height}px\">${index + 1}. ${item.name}</strong>`;
+    const sizes = `${item.width}×${item.height}px`;
+    const sizeMarkup = showSizesToggle.checked ? `<small>${sizes}</small>` : "";
+    meta.innerHTML = `<strong title=\"${sizes}\">${index + 1}. ${item.name}</strong>${sizeMarkup}`;
 
     const actions = document.createElement("div");
     actions.className = "actions";
