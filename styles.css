@@ -54,8 +54,8 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   border-radius: 9px;
   background: var(--soft);
   border: 1px solid var(--border);
@@ -65,9 +65,9 @@ body {
 }
 
 .badge .logo {
-  width: 20px;
-  height: 20px;
-  color: var(--accent);
+  width: 24px;
+  height: 24px;
+  display: block;
 }
 
 .panel {
