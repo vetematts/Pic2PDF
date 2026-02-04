@@ -125,6 +125,15 @@ body {
   width: 140px;
 }
 
+.select.color input[type="color"] {
+  width: 36px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--soft);
+}
+
 .toggle {
   display: inline-flex;
   align-items: center;
