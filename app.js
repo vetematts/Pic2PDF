@@ -9,6 +9,8 @@ const qualityRange = document.getElementById("quality");
 const qualityValue = document.getElementById("qualityValue");
 const pageSizeSelect = document.getElementById("pageSize");
 const fitModeSelect = document.getElementById("fitMode");
+const marginSelect = document.getElementById("margin");
+const pageBgInput = document.getElementById("pageBg");
 const showSizesToggle = document.getElementById("showSizes");
 const countLabel = document.getElementById("count");
 const statusLabel = document.getElementById("status");
@@ -84,6 +86,8 @@ exportBtn.addEventListener("click", async () => {
     const pdfDoc = await PDFLib.PDFDocument.create();
     const maxDim = Number(downscaleSelect.value);
     const quality = Number(qualityRange.value);
+    const margin = Number(marginSelect.value);
+    const pageBg = pageBgInput.value;
 
     for (let i = 0; i < items.length; i += 1) {
       const item = items[i];
@@ -97,17 +101,33 @@ exportBtn.addEventListener("click", async () => {
         : await pdfDoc.embedJpg(bytes);
 
       const { width, height } = embed.size();
-      const pageSize = getPageSize(pageSizeSelect.value, width, height);
+      const pageSize = getPageSize(pageSizeSelect.value, width, height, margin);
       const page = pdfDoc.addPage([pageSize.width, pageSize.height]);
+      const bgColor = hexToRgb(pageBg);
+      if (bgColor) {
+        page.drawRectangle({
+          x: 0,
+          y: 0,
+          width: pageSize.width,
+          height: pageSize.height,
+          color: PDFLib.rgb(bgColor.r, bgColor.g, bgColor.b),
+        });
+      }
+
       const placement = getPlacement(
-        pageSize.width,
-        pageSize.height,
+        pageSize.width - margin * 2,
+        pageSize.height - margin * 2,
         width,
         height,
         fitModeSelect.value
       );
 
-      page.drawImage(embed, placement);
+      page.drawImage(embed, {
+        x: placement.x + margin,
+        y: placement.y + margin,
+        width: placement.width,
+        height: placement.height,
+      });
       statusLabel.textContent = `Added ${i + 1} / ${items.length}`;
       progress.value = i + 1;
       await new Promise((r) => setTimeout(r, 0));
@@ -336,14 +356,14 @@ async function estimateTotalBytes(token) {
   estimateLabel.textContent = `Estimated: ${formatBytes(total)}`;
 }
 
-function getPageSize(mode, imgWidth, imgHeight) {
+function getPageSize(mode, imgWidth, imgHeight, margin) {
   if (mode === "a4") {
     return { width: 595.28, height: 841.89 };
   }
   if (mode === "letter") {
     return { width: 612, height: 792 };
   }
-  return { width: imgWidth, height: imgHeight };
+  return { width: imgWidth + margin * 2, height: imgHeight + margin * 2 };
 }
 
 function getPlacement(pageWidth, pageHeight, imgWidth, imgHeight, fitMode) {
@@ -498,4 +518,15 @@ function downloadBlob(blob, filename) {
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
+}
+
+function hexToRgb(hex) {
+  if (typeof hex !== "string") return null;
+  const value = hex.replace("#", "");
+  if (value.length !== 6) return null;
+  const r = Number.parseInt(value.slice(0, 2), 16);
+  const g = Number.parseInt(value.slice(2, 4), 16);
+  const b = Number.parseInt(value.slice(4, 6), 16);
+  if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) return null;
+  return { r: r / 255, g: g / 255, b: b / 255 };
 }
