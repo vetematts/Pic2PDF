@@ -65,52 +65,54 @@
             <button id="clearBtn" class="ghost" disabled>Clear</button>
           </div>
           <div class="controls-advanced">
-            <div class="select inline advanced">
-              <label for="pageSize">Page size</label>
-              <select id="pageSize">
-                <option value="auto" selected>Auto</option>
-                <option value="a4">A4</option>
-                <option value="letter">Letter</option>
-              </select>
+            <div class="advanced-inner">
+              <div class="select inline advanced">
+                <label for="pageSize">Page size</label>
+                <select id="pageSize">
+                  <option value="auto" selected>Auto</option>
+                  <option value="a4">A4</option>
+                  <option value="letter">Letter</option>
+                </select>
+              </div>
+              <div class="select advanced">
+                <label for="fitMode">Fit mode</label>
+                <select id="fitMode">
+                  <option value="contain" selected>Contain</option>
+                  <option value="cover">Cover</option>
+                </select>
+              </div>
+              <div class="select advanced">
+                <label for="margin">Margin</label>
+                <select id="margin">
+                  <option value="0" selected>0 pt</option>
+                  <option value="12">12 pt</option>
+                  <option value="24">24 pt</option>
+                  <option value="36">36 pt</option>
+                  <option value="48">48 pt</option>
+                </select>
+              </div>
+              <div class="select color advanced">
+                <label for="pageBg">Page color</label>
+                <input id="pageBg" type="color" value="#ffffff" />
+              </div>
+              <div class="select advanced">
+                <label for="downscale">Downscale</label>
+                <select id="downscale">
+                  <option value="0">Original</option>
+                  <option value="3000">Max 3000px</option>
+                  <option value="2000" selected>Max 2000px</option>
+                  <option value="1200">Max 1200px</option>
+                </select>
+              </div>
+              <div class="select range advanced">
+                <label for="quality">Quality <span id="qualityValue">0.9</span></label>
+                <input id="quality" type="range" min="0.6" max="1" step="0.05" value="0.9" />
+              </div>
+              <label class="toggle advanced">
+                <input id="showSizes" type="checkbox" />
+                <span>Show sizes</span>
+              </label>
             </div>
-            <div class="select advanced">
-              <label for="fitMode">Fit mode</label>
-              <select id="fitMode">
-                <option value="contain" selected>Contain</option>
-                <option value="cover">Cover</option>
-              </select>
-            </div>
-            <div class="select advanced">
-              <label for="margin">Margin</label>
-              <select id="margin">
-                <option value="0" selected>0 pt</option>
-                <option value="12">12 pt</option>
-                <option value="24">24 pt</option>
-                <option value="36">36 pt</option>
-                <option value="48">48 pt</option>
-              </select>
-            </div>
-            <div class="select color advanced">
-              <label for="pageBg">Page color</label>
-              <input id="pageBg" type="color" value="#ffffff" />
-            </div>
-            <div class="select advanced">
-              <label for="downscale">Downscale</label>
-              <select id="downscale">
-                <option value="0">Original</option>
-                <option value="3000">Max 3000px</option>
-                <option value="2000" selected>Max 2000px</option>
-                <option value="1200">Max 1200px</option>
-              </select>
-            </div>
-            <div class="select range advanced">
-              <label for="quality">Quality <span id="qualityValue">0.9</span></label>
-              <input id="quality" type="range" min="0.6" max="1" step="0.05" value="0.9" />
-            </div>
-            <label class="toggle advanced">
-              <input id="showSizes" type="checkbox" />
-              <span>Show sizes</span>
-            </label>
           </div>
         </div>
 
