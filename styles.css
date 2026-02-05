@@ -1,11 +1,14 @@
 :root {
-  --bg: #1f1f1f;
-  --ink: #f2f2f2;
-  --muted: #a7a7a7;
-  --accent: #3aa0ff;
-  --panel: #262626;
+  --bg: #171717;
+  --ink: #f5f6f7;
+  --muted: #b1b1b1;
+  --accent: #4aa5ff;
+  --panel: #202020;
   --border: #343434;
-  --soft: #2c2c2c;
+  --soft: #2a2a2a;
+  --glass: rgba(28, 28, 28, 0.6);
+  --glass-strong: rgba(34, 34, 34, 0.7);
+  --glow: rgba(255, 255, 255, 0.06);
 }
 
 * {
@@ -17,7 +20,9 @@ body {
   font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(circle at 20% 20%, #262626 0%, #1f1f1f 45%, #1b1b1b 100%);
+    radial-gradient(circle at 20% 20%, #2a2a2a 0%, #1e1e1e 42%, #151515 100%),
+    radial-gradient(circle at 90% 0%, rgba(74, 165, 255, 0.12), transparent 50%),
+    radial-gradient(circle at 0% 90%, rgba(255, 70, 70, 0.1), transparent 55%);
   min-height: 100vh;
 }
 
@@ -36,6 +41,7 @@ body {
   font-size: clamp(1.7rem, 3.2vw, 2.6rem);
   margin: 0;
   letter-spacing: 0.4px;
+  text-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
 }
 
 .hero p {
@@ -48,6 +54,12 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  padding: 10px 16px;
+  border-radius: 18px;
+  background: var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .badge {
@@ -58,8 +70,9 @@ body {
   height: 64px;
   border-radius: 18px;
   padding: 0;
-  background: var(--soft);
-  border: 1px solid var(--border);
+  background: linear-gradient(150deg, rgba(42, 42, 42, 0.9), rgba(26, 26, 26, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   font-size: 0.75rem;
   letter-spacing: 1px;
   color: var(--muted);
@@ -104,12 +117,13 @@ body {
   position: sticky;
   top: 16px;
   z-index: 5;
-  background: rgba(31, 31, 31, 0.92);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  background: var(--glass-strong);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
   padding: 10px 12px;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(12px);
   margin-bottom: 14px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 var(--glow);
 }
 
 .file-btn {
@@ -119,7 +133,7 @@ body {
   padding: 9px 14px;
   border-radius: 9px;
   border: 1px dashed var(--accent);
-  background: transparent;
+  background: rgba(74, 165, 255, 0.06);
   color: var(--accent);
   font-weight: 600;
   cursor: pointer;
@@ -206,19 +220,22 @@ button:disabled {
 }
 
 .drop {
-  border: 2px dashed var(--border);
-  border-radius: 12px;
-  padding: 22px 18px;
+  border: 2px dashed rgba(58, 160, 255, 0.35);
+  border-radius: 16px;
+  padding: 20px;
   text-align: center;
   color: var(--muted);
   margin-bottom: 14px;
-  background: rgba(255, 255, 255, 0.02);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
   transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
 
 .drop.dragover {
   border-color: var(--accent);
-  background: rgba(58, 160, 255, 0.08);
+  background: rgba(58, 160, 255, 0.12);
+  box-shadow: 0 10px 24px rgba(58, 160, 255, 0.2);
   transform: translateY(-2px);
 }
 
@@ -302,6 +319,11 @@ button:disabled {
   margin-top: 10px;
   font-size: 0.85rem;
   color: var(--muted);
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
 }
 
 .status-left,
@@ -348,6 +370,7 @@ progress::-moz-progress-bar {
   margin-top: 18px;
   color: var(--muted);
   font-size: 0.8rem;
+  opacity: 0.9;
 }
 
 button:hover:not(:disabled),
