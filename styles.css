@@ -54,12 +54,6 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 16px;
-  border-radius: 18px;
-  background: var(--glass);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .badge {
@@ -70,9 +64,9 @@ body {
   height: 64px;
   border-radius: 18px;
   padding: 0;
-  background: linear-gradient(150deg, rgba(42, 42, 42, 0.9), rgba(26, 26, 26, 0.9));
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  background: transparent;
+  border: none;
+  box-shadow: none;
   font-size: 0.75rem;
   letter-spacing: 1px;
   color: var(--muted);
