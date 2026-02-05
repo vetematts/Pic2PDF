@@ -131,15 +131,27 @@ body {
 
 .controls-advanced {
   grid-column: 1 / -1;
-  display: none;
+  display: flex;
   gap: 10px;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  overflow: hidden;
+  pointer-events: none;
+  transition:
+    max-height 0.24s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .controls.advanced-on .controls-advanced {
-  display: flex;
+  max-height: 160px;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .sticky-bar {
