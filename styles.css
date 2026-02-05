@@ -37,12 +37,12 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 18px;
+  gap: 22px;
 }
 
 .hero {
   text-align: center;
-  margin-bottom: 22px;
+  margin-bottom: 6px;
 }
 
 .hero h1 {
@@ -99,10 +99,9 @@ body {
 }
 
 .controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px 14px;
   align-items: center;
   margin-top: 14px;
 }
@@ -111,12 +110,34 @@ body {
   display: none;
 }
 
-.controls.advanced-on .advanced.select {
+.controls.advanced-on .advanced.select,
+.controls.advanced-on .advanced.toggle {
   display: grid;
 }
 
-.controls.advanced-on .advanced.toggle {
+.controls-core,
+.controls-actions {
   display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: center;
+}
+
+.controls-actions {
+  justify-self: end;
+}
+
+.controls-advanced {
+  grid-column: 1 / -1;
+  display: none;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.controls.advanced-on .controls-advanced {
+  display: flex;
 }
 
 .sticky-bar {
@@ -156,6 +177,12 @@ body {
   color: var(--muted);
 }
 
+.select.inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .select.range {
   min-width: 140px;
 }
@@ -180,6 +207,10 @@ body {
   font-size: 0.78rem;
   color: var(--muted);
   user-select: none;
+}
+
+.controls-advanced .toggle {
+  display: inline-flex;
 }
 
 .toggle input {
