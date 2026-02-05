@@ -88,6 +88,18 @@ body {
   margin-top: 14px;
 }
 
+.controls .advanced {
+  display: none;
+}
+
+.controls.advanced-on .advanced.select {
+  display: grid;
+}
+
+.controls.advanced-on .advanced.toggle {
+  display: inline-flex;
+}
+
 .sticky-bar {
   position: sticky;
   top: 16px;

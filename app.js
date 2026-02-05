@@ -12,6 +12,8 @@ const fitModeSelect = document.getElementById("fitMode");
 const marginSelect = document.getElementById("margin");
 const pageBgInput = document.getElementById("pageBg");
 const showSizesToggle = document.getElementById("showSizes");
+const advancedToggle = document.getElementById("advancedToggle");
+const controls = document.getElementById("controls");
 const countLabel = document.getElementById("count");
 const statusLabel = document.getElementById("status");
 const progress = document.getElementById("progress");
@@ -54,6 +56,13 @@ clearBtn.addEventListener("click", () => {
 
 showSizesToggle.addEventListener("change", () => {
   renderList();
+});
+
+advancedToggle.addEventListener("click", () => {
+  controls.classList.toggle("advanced-on");
+  const isOpen = controls.classList.contains("advanced-on");
+  advancedToggle.textContent = isOpen ? "Hide advanced" : "Advanced";
+  advancedToggle.setAttribute("aria-expanded", String(isOpen));
 });
 
 qualityRange.addEventListener("input", () => {
