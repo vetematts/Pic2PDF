@@ -14,6 +14,7 @@ const pageBgInput = document.getElementById("pageBg");
 const showSizesToggle = document.getElementById("showSizes");
 const advancedToggle = document.getElementById("advancedToggle");
 const controls = document.getElementById("controls");
+const advancedPanel = document.querySelector(".controls-advanced");
 const countLabel = document.getElementById("count");
 const statusLabel = document.getElementById("status");
 const progress = document.getElementById("progress");
@@ -58,11 +59,38 @@ showSizesToggle.addEventListener("change", () => {
   renderList();
 });
 
+function openAdvanced() {
+  controls.classList.add("advanced-on");
+  advancedToggle.textContent = "Hide advanced";
+  advancedToggle.setAttribute("aria-expanded", "true");
+  const height = advancedPanel.scrollHeight;
+  advancedPanel.style.height = `${height}px`;
+  const onEnd = (event) => {
+    if (event.propertyName !== "height") return;
+    advancedPanel.style.height = "auto";
+    advancedPanel.removeEventListener("transitionend", onEnd);
+  };
+  advancedPanel.addEventListener("transitionend", onEnd);
+}
+
+function closeAdvanced() {
+  const height = advancedPanel.getBoundingClientRect().height;
+  advancedPanel.style.height = `${height}px`;
+  requestAnimationFrame(() => {
+    controls.classList.remove("advanced-on");
+    advancedPanel.style.height = "0px";
+  });
+  advancedToggle.textContent = "Advanced";
+  advancedToggle.setAttribute("aria-expanded", "false");
+}
+
 advancedToggle.addEventListener("click", () => {
-  controls.classList.toggle("advanced-on");
   const isOpen = controls.classList.contains("advanced-on");
-  advancedToggle.textContent = isOpen ? "Hide advanced" : "Advanced";
-  advancedToggle.setAttribute("aria-expanded", String(isOpen));
+  if (isOpen) {
+    closeAdvanced();
+  } else {
+    openAdvanced();
+  }
 });
 
 qualityRange.addEventListener("input", () => {
