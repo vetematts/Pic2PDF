@@ -56,14 +56,6 @@
 
         <div class="controls sticky-bar" id="controls">
           <div class="controls-core">
-            <div class="select inline">
-              <label for="pageSize">Page size</label>
-              <select id="pageSize">
-                <option value="auto" selected>Auto</option>
-                <option value="a4">A4</option>
-                <option value="letter">Letter</option>
-              </select>
-            </div>
             <button id="advancedToggle" class="ghost small" type="button" aria-expanded="false">
               Advanced
             </button>
@@ -73,6 +65,14 @@
             <button id="clearBtn" class="ghost" disabled>Clear</button>
           </div>
           <div class="controls-advanced">
+            <div class="select inline advanced">
+              <label for="pageSize">Page size</label>
+              <select id="pageSize">
+                <option value="auto" selected>Auto</option>
+                <option value="a4">A4</option>
+                <option value="letter">Letter</option>
+              </select>
+            </div>
             <div class="select advanced">
               <label for="fitMode">Fit mode</label>
               <select id="fitMode">

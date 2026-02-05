@@ -104,6 +104,8 @@ body {
   gap: 10px 14px;
   align-items: center;
   margin-top: 14px;
+  justify-content: stretch;
+  width: 100%;
 }
 
 .controls .advanced {
@@ -120,7 +122,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  justify-self: center;
+  justify-self: start;
 }
 
 .controls-actions {
@@ -151,6 +153,7 @@ body {
   backdrop-filter: blur(12px);
   margin-bottom: 14px;
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 var(--glow);
+  width: 100%;
 }
 
 .file-btn {
