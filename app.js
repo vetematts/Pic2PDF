@@ -2,6 +2,7 @@
 const fileInput = document.getElementById("fileInput");
 const dropZone = document.getElementById("dropZone");
 const list = document.getElementById("list");
+const emptyState = document.getElementById("emptyState");
 const exportBtn = document.getElementById("exportBtn");
 const clearBtn = document.getElementById("clearBtn");
 const downscaleSelect = document.getElementById("downscale");
@@ -46,6 +47,11 @@ fileInput.addEventListener("change", (event) => {
 
 dropZone.addEventListener("drop", (event) => {
   handleFiles(event.dataTransfer.files);
+});
+
+dropZone.addEventListener("click", (event) => {
+  if (event.target.closest("button, input, select, label")) return;
+  fileInput.click();
 });
 
 clearBtn.addEventListener("click", () => {
@@ -251,43 +257,16 @@ function renderList() {
 
     const dragHandle = document.createElement("span");
     dragHandle.className = "drag-handle";
-    dragHandle.textContent = "↕";
+    dragHandle.textContent = "Drag";
     dragHandle.title = "Drag to reorder";
 
-    const rotateLeftBtn = document.createElement("button");
-    rotateLeftBtn.className = "ghost small";
-    rotateLeftBtn.textContent = "⟲";
-    rotateLeftBtn.title = "Rotate left";
-    rotateLeftBtn.addEventListener("click", () => {
-      item.rotation = (item.rotation - 90 + 360) % 360;
-      renderList();
-    });
-
-    const rotateRightBtn = document.createElement("button");
-    rotateRightBtn.className = "ghost small";
-    rotateRightBtn.textContent = "⟳";
-    rotateRightBtn.title = "Rotate right";
-    rotateRightBtn.addEventListener("click", () => {
+    const rotateBtn = document.createElement("button");
+    rotateBtn.className = "ghost small";
+    rotateBtn.textContent = "Rotate 90deg";
+    rotateBtn.title = "Rotate 90 degrees";
+    rotateBtn.addEventListener("click", () => {
       item.rotation = (item.rotation + 90) % 360;
       renderList();
-    });
-
-    const moveUpBtn = document.createElement("button");
-    moveUpBtn.className = "ghost small";
-    moveUpBtn.textContent = "Up";
-    moveUpBtn.title = "Move up";
-    moveUpBtn.disabled = index === 0;
-    moveUpBtn.addEventListener("click", () => {
-      moveItem(index, index - 1);
-    });
-
-    const moveDownBtn = document.createElement("button");
-    moveDownBtn.className = "ghost small";
-    moveDownBtn.textContent = "Down";
-    moveDownBtn.title = "Move down";
-    moveDownBtn.disabled = index === items.length - 1;
-    moveDownBtn.addEventListener("click", () => {
-      moveItem(index, index + 1);
     });
 
     const removeBtn = document.createElement("button");
@@ -301,7 +280,7 @@ function renderList() {
       }
     });
 
-    actions.append(dragHandle, rotateLeftBtn, rotateRightBtn, moveUpBtn, moveDownBtn, removeBtn);
+    actions.append(dragHandle, rotateBtn, removeBtn);
     li.append(img, meta, actions);
     list.append(li);
 
@@ -337,6 +316,7 @@ function updateUI() {
   countLabel.textContent = `${items.length} image${items.length === 1 ? "" : "s"}`;
   exportBtn.disabled = items.length === 0;
   clearBtn.disabled = items.length === 0;
+  emptyState.hidden = items.length > 0;
 }
 
 function getRotatedDims(item) {
@@ -344,13 +324,6 @@ function getRotatedDims(item) {
     return { width: item.width, height: item.height };
   }
   return { width: item.height, height: item.width };
-}
-
-function moveItem(from, to) {
-  if (to < 0 || to >= items.length || from === to) return;
-  const [moved] = items.splice(from, 1);
-  items.splice(to, 0, moved);
-  renderList();
 }
 
 function clearStatus() {
