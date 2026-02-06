@@ -327,17 +327,61 @@ button:disabled {
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--panel);
-  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+  position: relative;
+  overflow: visible;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.item::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 11px;
+  z-index: 0;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 290deg,
+    rgba(255, 255, 255, 0.85) 320deg,
+    transparent 350deg
+  );
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.24));
+}
+
+.item::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 9px;
+  background: var(--panel);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .item:hover {
   border-color: #3f3f3f;
-  transform: translateY(-1px);
+}
+
+.item:hover::before {
+  opacity: 0.75;
+  animation: borderShimmer 3.4s linear infinite;
 }
 
 .item.dragging {
   opacity: 0.5;
   transform: scale(0.99);
+}
+
+.item > * {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes borderShimmer {
+  to {
+    transform: rotate(1turn);
+  }
 }
 
 .thumb {
