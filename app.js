@@ -25,12 +25,6 @@ const estimateLabel = document.getElementById("estimate");
 const items = [];
 let dragId = null;
 let estimateToken = 0;
-let touchDragId = null;
-let touchDragging = false;
-let touchLastTargetId = null;
-let touchHoverTargetId = null;
-let touchMoveListener = null;
-let touchEndListener = null;
 const touchUiQuery = window.matchMedia("(pointer: coarse), (max-width: 900px)");
 let isTouchDevice = touchUiQuery.matches;
 
@@ -254,12 +248,6 @@ function renderList() {
     li.className = "item";
     li.setAttribute("draggable", isTouchDevice ? "false" : "true");
     li.dataset.id = item.id;
-    if (touchDragging && touchDragId === item.id) {
-      li.classList.add("dragging", "touch-dragging");
-    }
-    if (touchDragging && touchHoverTargetId === item.id && touchDragId !== item.id) {
-      li.classList.add("touch-drop-target");
-    }
 
     const img = document.createElement("img");
     img.src = item.dataUrl;
@@ -287,14 +275,6 @@ function renderList() {
     dragHandle.className = "drag-handle";
     dragHandle.textContent = "Drag";
     dragHandle.title = "Drag to reorder";
-    dragHandle.addEventListener(
-      "touchstart",
-      (event) => {
-        event.preventDefault();
-        startTouchReorder(item.id);
-      },
-      { passive: false }
-    );
 
     const rotateBtn = document.createElement("button");
     rotateBtn.className = "ghost small icon-btn";
@@ -322,7 +302,35 @@ function renderList() {
       }
     });
 
-    actionsLeft.append(dragHandle, rotateBtn);
+    if (isTouchDevice) {
+      const moveUpBtn = document.createElement("button");
+      moveUpBtn.className = "ghost small";
+      moveUpBtn.textContent = "Up";
+      moveUpBtn.disabled = index === 0;
+      moveUpBtn.addEventListener("click", () => {
+        if (index > 0) {
+          const [moved] = items.splice(index, 1);
+          items.splice(index - 1, 0, moved);
+          renderList();
+        }
+      });
+
+      const moveDownBtn = document.createElement("button");
+      moveDownBtn.className = "ghost small";
+      moveDownBtn.textContent = "Down";
+      moveDownBtn.disabled = index === items.length - 1;
+      moveDownBtn.addEventListener("click", () => {
+        if (index < items.length - 1) {
+          const [moved] = items.splice(index, 1);
+          items.splice(index + 1, 0, moved);
+          renderList();
+        }
+      });
+
+      actionsLeft.append(moveUpBtn, moveDownBtn, rotateBtn);
+    } else {
+      actionsLeft.append(dragHandle, rotateBtn);
+    }
     actions.append(actionsLeft, removeBtn);
     li.append(img, meta, actions);
 
@@ -361,79 +369,6 @@ function updateUI() {
   exportBtn.disabled = items.length === 0;
   clearBtn.disabled = items.length === 0;
   emptyState.hidden = items.length > 0;
-}
-
-function moveItemById(fromId, toId) {
-  const from = items.findIndex((entry) => entry.id === fromId);
-  const to = items.findIndex((entry) => entry.id === toId);
-  if (from < 0 || to < 0 || from === to) return false;
-  const [moved] = items.splice(from, 1);
-  items.splice(to, 0, moved);
-  return true;
-}
-
-function stopTouchReorder() {
-  touchDragging = false;
-  touchDragId = null;
-  touchLastTargetId = null;
-  touchHoverTargetId = null;
-  document.body.classList.remove("reordering");
-  if (statusLabel.textContent.startsWith("Reorder mode")) {
-    statusLabel.textContent = "";
-  }
-  if (touchMoveListener) {
-    document.removeEventListener("touchmove", touchMoveListener);
-    touchMoveListener = null;
-  }
-  if (touchEndListener) {
-    document.removeEventListener("touchend", touchEndListener);
-    document.removeEventListener("touchcancel", touchEndListener);
-    touchEndListener = null;
-  }
-  renderList();
-}
-
-function startTouchReorder(itemId) {
-  if (touchDragging) return;
-  touchDragging = true;
-  touchDragId = itemId;
-  touchLastTargetId = itemId;
-  touchHoverTargetId = itemId;
-  document.body.classList.add("reordering");
-  statusLabel.textContent = "Reorder mode: drag over target row, then release.";
-  renderList();
-
-  touchMoveListener = (event) => {
-    if (!touchDragging || !touchDragId) return;
-    event.preventDefault();
-    const touch = event.changedTouches[0] || event.touches[0];
-    if (!touch) return;
-    const target = document.elementFromPoint(touch.clientX, touch.clientY);
-    const targetItem = target && target.closest ? target.closest(".item") : null;
-    if (!targetItem) return;
-    const targetId = targetItem.dataset.id;
-    if (!targetId || targetId === touchLastTargetId) return;
-    touchLastTargetId = targetId;
-    touchHoverTargetId = targetId;
-    renderList();
-  };
-
-  touchEndListener = () => {
-    if (
-      touchDragging &&
-      touchDragId &&
-      touchHoverTargetId &&
-      touchHoverTargetId !== touchDragId &&
-      moveItemById(touchDragId, touchHoverTargetId)
-    ) {
-      renderList();
-    }
-    stopTouchReorder();
-  };
-
-  document.addEventListener("touchmove", touchMoveListener, { passive: false });
-  document.addEventListener("touchend", touchEndListener);
-  document.addEventListener("touchcancel", touchEndListener);
 }
 
 function getRotatedDims(item) {
