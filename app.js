@@ -276,6 +276,8 @@ function renderList() {
 
     const actions = document.createElement("div");
     actions.className = "actions";
+    const actionsLeft = document.createElement("div");
+    actionsLeft.className = "actions-left";
 
     const dragHandle = document.createElement("span");
     dragHandle.className = "drag-handle";
@@ -316,7 +318,8 @@ function renderList() {
       }
     });
 
-    actions.append(dragHandle, rotateBtn, removeBtn);
+    actionsLeft.append(dragHandle, rotateBtn);
+    actions.append(actionsLeft, removeBtn);
     li.append(img, meta, actions);
 
     list.append(li);
@@ -390,6 +393,7 @@ function startTouchReorder(itemId) {
 
   touchMoveListener = (event) => {
     if (!touchDragging || !touchDragId) return;
+    event.preventDefault();
     const touch = event.touches[0];
     if (!touch) return;
     const target = document.elementFromPoint(touch.clientX, touch.clientY);
