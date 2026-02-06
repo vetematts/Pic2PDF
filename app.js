@@ -261,8 +261,14 @@ function renderList() {
     dragHandle.title = "Drag to reorder";
 
     const rotateBtn = document.createElement("button");
-    rotateBtn.className = "ghost small";
-    rotateBtn.textContent = "Rotate 90deg";
+    rotateBtn.className = "ghost small icon-btn";
+    rotateBtn.innerHTML = `
+      <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+        <path d="M10 3a7 7 0 1 1-6.2 10.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        <path d="M2.8 8.8 3.1 13l3.9-1.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <span>Rotate 90°</span>
+    `;
     rotateBtn.title = "Rotate 90 degrees";
     rotateBtn.addEventListener("click", () => {
       item.rotation = (item.rotation + 90) % 360;

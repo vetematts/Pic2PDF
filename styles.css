@@ -435,6 +435,17 @@ progress::-moz-progress-bar {
   font-size: 0.75rem;
 }
 
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
 .foot {
   text-align: center;
   margin-top: 18px;
