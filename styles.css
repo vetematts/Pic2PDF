@@ -332,46 +332,33 @@ button:disabled {
   transition: border-color 0.12s ease, background 0.12s ease;
 }
 
-.item::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 34%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.78), transparent);
-  z-index: 0;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(220%);
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.2));
-}
-
-.item::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 34%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.78), transparent);
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0;
-  transform: translateX(-220%);
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.2));
-}
-
 .item:hover {
   border-color: #3f3f3f;
 }
 
-.item:hover::before {
-  animation: borderShimmerTop 3.2s ease-in-out infinite;
+.edge-orbit {
+  position: absolute;
+  inset: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  pointer-events: none;
+  z-index: 2;
 }
 
-.item:hover::after {
-  animation: borderShimmerBottom 3.2s ease-in-out infinite;
+.edge-orbit rect {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.78);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-dasharray: 12 88;
+  stroke-dashoffset: 0;
+  opacity: 0;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.2));
+}
+
+.item:hover .edge-orbit rect {
+  opacity: 0.72;
+  animation: edgeOrbit 4.2s linear infinite;
 }
 
 .item.dragging {
@@ -384,37 +371,9 @@ button:disabled {
   z-index: 1;
 }
 
-@keyframes borderShimmerTop {
-  0% {
-    transform: translateX(220%);
-    opacity: 0;
-  }
-  12% {
-    opacity: 0.72;
-  }
-  88% {
-    opacity: 0.72;
-  }
-  100% {
-    transform: translateX(-220%);
-    opacity: 0;
-  }
-}
-
-@keyframes borderShimmerBottom {
-  0% {
-    transform: translateX(-220%);
-    opacity: 0;
-  }
-  12% {
-    opacity: 0.72;
-  }
-  88% {
-    opacity: 0.72;
-  }
-  100% {
-    transform: translateX(220%);
-    opacity: 0;
+@keyframes edgeOrbit {
+  to {
+    stroke-dashoffset: -100;
   }
 }
 

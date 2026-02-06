@@ -228,6 +228,7 @@ async function handleFiles(fileList) {
 
 function renderList() {
   list.innerHTML = "";
+  const svgNs = "http://www.w3.org/2000/svg";
 
   items.forEach((item, index) => {
     const li = document.createElement("li");
@@ -288,6 +289,24 @@ function renderList() {
 
     actions.append(dragHandle, rotateBtn, removeBtn);
     li.append(img, meta, actions);
+
+    const edgeOrbit = document.createElementNS(svgNs, "svg");
+    edgeOrbit.setAttribute("class", "edge-orbit");
+    edgeOrbit.setAttribute("viewBox", "0 0 100 60");
+    edgeOrbit.setAttribute("aria-hidden", "true");
+
+    const edgePath = document.createElementNS(svgNs, "rect");
+    edgePath.setAttribute("x", "1");
+    edgePath.setAttribute("y", "1");
+    edgePath.setAttribute("width", "98");
+    edgePath.setAttribute("height", "58");
+    edgePath.setAttribute("rx", "10");
+    edgePath.setAttribute("ry", "10");
+    edgePath.setAttribute("pathLength", "100");
+
+    edgeOrbit.append(edgePath);
+    li.append(edgeOrbit);
+
     list.append(li);
 
     li.addEventListener("dragstart", (event) => {
