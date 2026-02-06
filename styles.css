@@ -328,7 +328,7 @@ button:disabled {
   border-radius: 10px;
   background: var(--panel);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   transition: border-color 0.12s ease, background 0.12s ease;
 }
 
@@ -359,10 +359,17 @@ button:disabled {
   display: grid;
   gap: 3px;
   font-size: 0.88rem;
+  min-width: 0;
 }
 
 .meta small {
   color: var(--muted);
+}
+
+.meta strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .actions {
@@ -370,6 +377,7 @@ button:disabled {
   gap: 6px;
   flex-wrap: wrap;
   justify-content: flex-end;
+  flex-shrink: 0;
 }
 
 .drag-handle {
@@ -474,7 +482,7 @@ button:active:not(:disabled),
   transform: translateY(0);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px), (pointer: coarse) {
   body {
     overflow: auto;
   }
