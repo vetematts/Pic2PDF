@@ -30,7 +30,20 @@ let touchDragging = false;
 let touchLastTargetId = null;
 let touchMoveListener = null;
 let touchEndListener = null;
-const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+const touchUiQuery = window.matchMedia("(pointer: coarse), (max-width: 900px)");
+let isTouchDevice = touchUiQuery.matches;
+
+function syncTouchUi() {
+  isTouchDevice = touchUiQuery.matches;
+  document.body.classList.toggle("touch-ui", isTouchDevice);
+}
+
+syncTouchUi();
+if (touchUiQuery.addEventListener) {
+  touchUiQuery.addEventListener("change", syncTouchUi);
+} else if (touchUiQuery.addListener) {
+  touchUiQuery.addListener(syncTouchUi);
+}
 
 fileInput.addEventListener("change", (event) => {
   handleFiles(event.target.files);

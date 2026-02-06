@@ -15,6 +15,10 @@
   box-sizing: border-box;
 }
 
+html {
+  background: #151515;
+}
+
 body {
   margin: 0;
   font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
@@ -25,6 +29,8 @@ body {
     radial-gradient(circle at 0% 90%, rgba(255, 70, 70, 0.1), transparent 55%);
   min-height: 100vh;
   overflow: auto;
+  background-color: #151515;
+  overscroll-behavior: none;
 }
 
 .wrap {
@@ -62,6 +68,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  justify-content: center;
 }
 
 .badge {
@@ -344,6 +351,59 @@ button:disabled {
 .item > * {
   position: relative;
   z-index: 1;
+}
+
+body.touch-ui .wrap {
+  min-height: auto;
+  overflow: visible;
+  justify-content: flex-start;
+  padding: calc(16px + env(safe-area-inset-top)) 12px calc(20px + env(safe-area-inset-bottom));
+  gap: 14px;
+}
+
+body.touch-ui .brand {
+  width: 100%;
+  justify-content: center;
+}
+
+body.touch-ui .panel {
+  overflow: visible;
+}
+
+body.touch-ui .list {
+  max-height: none;
+  overflow: visible;
+}
+
+body.touch-ui .item {
+  grid-template-columns: 64px 1fr;
+  grid-template-areas:
+    "thumb meta"
+    "actions actions";
+  align-items: start;
+  row-gap: 8px;
+}
+
+body.touch-ui .thumb {
+  grid-area: thumb;
+}
+
+body.touch-ui .meta {
+  grid-area: meta;
+}
+
+body.touch-ui .actions {
+  grid-area: actions;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  display: flex;
+  gap: 8px;
+}
+
+body.touch-ui .actions .drag-handle,
+body.touch-ui .actions button {
+  font-size: 0.8rem;
+  padding: 7px 10px;
 }
 
 .thumb {
