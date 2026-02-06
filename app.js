@@ -25,6 +25,11 @@ const estimateLabel = document.getElementById("estimate");
 const items = [];
 let dragId = null;
 let estimateToken = 0;
+let touchDragId = null;
+let touchDragging = false;
+let touchLastTargetId = null;
+let touchMoveListener = null;
+let touchEndListener = null;
 
 fileInput.addEventListener("change", (event) => {
   handleFiles(event.target.files);
@@ -228,13 +233,15 @@ async function handleFiles(fileList) {
 
 function renderList() {
   list.innerHTML = "";
-  const svgNs = "http://www.w3.org/2000/svg";
 
   items.forEach((item, index) => {
     const li = document.createElement("li");
     li.className = "item";
     li.setAttribute("draggable", "true");
     li.dataset.id = item.id;
+    if (touchDragging && touchDragId === item.id) {
+      li.classList.add("dragging");
+    }
 
     const img = document.createElement("img");
     img.src = item.dataUrl;
@@ -260,6 +267,14 @@ function renderList() {
     dragHandle.className = "drag-handle";
     dragHandle.textContent = "Drag";
     dragHandle.title = "Drag to reorder";
+    dragHandle.addEventListener(
+      "touchstart",
+      (event) => {
+        event.preventDefault();
+        startTouchReorder(item.id);
+      },
+      { passive: false }
+    );
 
     const rotateBtn = document.createElement("button");
     rotateBtn.className = "ghost small icon-btn";
@@ -289,23 +304,6 @@ function renderList() {
 
     actions.append(dragHandle, rotateBtn, removeBtn);
     li.append(img, meta, actions);
-
-    const edgeOrbit = document.createElementNS(svgNs, "svg");
-    edgeOrbit.setAttribute("class", "edge-orbit");
-    edgeOrbit.setAttribute("viewBox", "0 0 100 60");
-    edgeOrbit.setAttribute("aria-hidden", "true");
-
-    const edgePath = document.createElementNS(svgNs, "rect");
-    edgePath.setAttribute("x", "1");
-    edgePath.setAttribute("y", "1");
-    edgePath.setAttribute("width", "98");
-    edgePath.setAttribute("height", "58");
-    edgePath.setAttribute("rx", "10");
-    edgePath.setAttribute("ry", "10");
-    edgePath.setAttribute("pathLength", "100");
-
-    edgeOrbit.append(edgePath);
-    li.append(edgeOrbit);
 
     list.append(li);
 
@@ -342,6 +340,63 @@ function updateUI() {
   exportBtn.disabled = items.length === 0;
   clearBtn.disabled = items.length === 0;
   emptyState.hidden = items.length > 0;
+}
+
+function moveItemById(fromId, toId) {
+  const from = items.findIndex((entry) => entry.id === fromId);
+  const to = items.findIndex((entry) => entry.id === toId);
+  if (from < 0 || to < 0 || from === to) return false;
+  const [moved] = items.splice(from, 1);
+  items.splice(to, 0, moved);
+  return true;
+}
+
+function stopTouchReorder() {
+  touchDragging = false;
+  touchDragId = null;
+  touchLastTargetId = null;
+  if (touchMoveListener) {
+    document.removeEventListener("touchmove", touchMoveListener);
+    touchMoveListener = null;
+  }
+  if (touchEndListener) {
+    document.removeEventListener("touchend", touchEndListener);
+    document.removeEventListener("touchcancel", touchEndListener);
+    touchEndListener = null;
+  }
+  renderList();
+}
+
+function startTouchReorder(itemId) {
+  if (touchDragging) return;
+  touchDragging = true;
+  touchDragId = itemId;
+  touchLastTargetId = itemId;
+  renderList();
+
+  touchMoveListener = (event) => {
+    if (!touchDragging || !touchDragId) return;
+    const touch = event.touches[0];
+    if (!touch) return;
+    event.preventDefault();
+    const target = document.elementFromPoint(touch.clientX, touch.clientY);
+    const targetItem = target && target.closest ? target.closest(".item") : null;
+    if (!targetItem) return;
+    const targetId = targetItem.dataset.id;
+    if (!targetId || targetId === touchDragId || targetId === touchLastTargetId) return;
+    if (moveItemById(touchDragId, targetId)) {
+      touchLastTargetId = targetId;
+      renderList();
+    }
+  };
+
+  touchEndListener = () => {
+    stopTouchReorder();
+  };
+
+  document.addEventListener("touchmove", touchMoveListener, { passive: false });
+  document.addEventListener("touchend", touchEndListener);
+  document.addEventListener("touchcancel", touchEndListener);
 }
 
 function getRotatedDims(item) {

@@ -336,31 +336,6 @@ button:disabled {
   border-color: #3f3f3f;
 }
 
-.edge-orbit {
-  position: absolute;
-  inset: -1px;
-  width: calc(100% + 2px);
-  height: calc(100% + 2px);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.edge-orbit rect {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.78);
-  stroke-width: 1.2;
-  stroke-linecap: round;
-  stroke-dasharray: 12 88;
-  stroke-dashoffset: 0;
-  opacity: 0;
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.2));
-}
-
-.item:hover .edge-orbit rect {
-  opacity: 0.72;
-  animation: edgeOrbit 4.2s linear infinite;
-}
-
 .item.dragging {
   opacity: 0.5;
   transform: scale(0.99);
@@ -369,12 +344,6 @@ button:disabled {
 .item > * {
   position: relative;
   z-index: 1;
-}
-
-@keyframes edgeOrbit {
-  to {
-    stroke-dashoffset: -100;
-  }
 }
 
 .thumb {
@@ -412,6 +381,9 @@ button:disabled {
   border: 1px solid var(--border);
   background: var(--soft);
   color: var(--muted);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .remove {
