@@ -33,6 +33,11 @@ body {
   overscroll-behavior: none;
 }
 
+body.reordering {
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
 .wrap {
   max-width: 720px;
   margin: 0 auto;
