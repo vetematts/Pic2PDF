@@ -353,6 +353,17 @@ button:disabled {
   transform: scale(0.99);
 }
 
+.item.touch-dragging {
+  opacity: 0.95;
+  border-color: rgba(74, 165, 255, 0.75);
+  box-shadow: 0 0 0 1px rgba(74, 165, 255, 0.35) inset;
+}
+
+.item.touch-drop-target {
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28) inset;
+}
+
 .item > * {
   position: relative;
   z-index: 1;

@@ -28,6 +28,7 @@ let estimateToken = 0;
 let touchDragId = null;
 let touchDragging = false;
 let touchLastTargetId = null;
+let touchHoverTargetId = null;
 let touchMoveListener = null;
 let touchEndListener = null;
 const touchUiQuery = window.matchMedia("(pointer: coarse), (max-width: 900px)");
@@ -254,7 +255,10 @@ function renderList() {
     li.setAttribute("draggable", isTouchDevice ? "false" : "true");
     li.dataset.id = item.id;
     if (touchDragging && touchDragId === item.id) {
-      li.classList.add("dragging");
+      li.classList.add("dragging", "touch-dragging");
+    }
+    if (touchDragging && touchHoverTargetId === item.id && touchDragId !== item.id) {
+      li.classList.add("touch-drop-target");
     }
 
     const img = document.createElement("img");
@@ -372,7 +376,11 @@ function stopTouchReorder() {
   touchDragging = false;
   touchDragId = null;
   touchLastTargetId = null;
+  touchHoverTargetId = null;
   document.body.classList.remove("reordering");
+  if (statusLabel.textContent.startsWith("Reorder mode")) {
+    statusLabel.textContent = "";
+  }
   if (touchMoveListener) {
     document.removeEventListener("touchmove", touchMoveListener);
     touchMoveListener = null;
@@ -390,7 +398,9 @@ function startTouchReorder(itemId) {
   touchDragging = true;
   touchDragId = itemId;
   touchLastTargetId = itemId;
+  touchHoverTargetId = itemId;
   document.body.classList.add("reordering");
+  statusLabel.textContent = "Reorder mode: drag over target row, then release.";
   renderList();
 
   touchMoveListener = (event) => {
@@ -402,14 +412,22 @@ function startTouchReorder(itemId) {
     const targetItem = target && target.closest ? target.closest(".item") : null;
     if (!targetItem) return;
     const targetId = targetItem.dataset.id;
-    if (!targetId || targetId === touchDragId || targetId === touchLastTargetId) return;
-    if (moveItemById(touchDragId, targetId)) {
-      touchLastTargetId = targetId;
-      renderList();
-    }
+    if (!targetId || targetId === touchLastTargetId) return;
+    touchLastTargetId = targetId;
+    touchHoverTargetId = targetId;
+    renderList();
   };
 
   touchEndListener = () => {
+    if (
+      touchDragging &&
+      touchDragId &&
+      touchHoverTargetId &&
+      touchHoverTargetId !== touchDragId &&
+      moveItemById(touchDragId, touchHoverTargetId)
+    ) {
+      renderList();
+    }
     stopTouchReorder();
   };
 
