@@ -30,6 +30,7 @@ let touchDragging = false;
 let touchLastTargetId = null;
 let touchMoveListener = null;
 let touchEndListener = null;
+const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 
 fileInput.addEventListener("change", (event) => {
   handleFiles(event.target.files);
@@ -237,7 +238,7 @@ function renderList() {
   items.forEach((item, index) => {
     const li = document.createElement("li");
     li.className = "item";
-    li.setAttribute("draggable", "true");
+    li.setAttribute("draggable", isTouchDevice ? "false" : "true");
     li.dataset.id = item.id;
     if (touchDragging && touchDragId === item.id) {
       li.classList.add("dragging");
@@ -378,7 +379,6 @@ function startTouchReorder(itemId) {
     if (!touchDragging || !touchDragId) return;
     const touch = event.touches[0];
     if (!touch) return;
-    event.preventDefault();
     const target = document.elementFromPoint(touch.clientX, touch.clientY);
     const targetItem = target && target.closest ? target.closest(".item") : null;
     if (!targetItem) return;

@@ -475,6 +475,27 @@ button:active:not(:disabled),
 }
 
 @media (max-width: 640px) {
+  body {
+    overflow: auto;
+  }
+
+  .wrap {
+    min-height: auto;
+    overflow: visible;
+    justify-content: flex-start;
+    padding: 16px 12px 20px;
+    gap: 14px;
+  }
+
+  .panel {
+    overflow: visible;
+  }
+
+  .list {
+    max-height: none;
+    overflow: visible;
+  }
+
   .item {
     grid-template-columns: 64px 1fr;
   }
