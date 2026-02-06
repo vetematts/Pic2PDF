@@ -328,35 +328,38 @@ button:disabled {
   border-radius: 10px;
   background: var(--panel);
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   transition: border-color 0.12s ease, background 0.12s ease;
 }
 
 .item::before {
   content: "";
   position: absolute;
-  inset: -1px;
-  border-radius: 11px;
+  left: 0;
+  top: 0;
+  width: 34%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.78), transparent);
   z-index: 0;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg 290deg,
-    rgba(255, 255, 255, 0.85) 320deg,
-    transparent 350deg
-  );
   opacity: 0;
   pointer-events: none;
-  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.24));
+  transform: translateX(220%);
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.2));
 }
 
 .item::after {
   content: "";
   position: absolute;
-  inset: 1px;
-  border-radius: 9px;
-  background: var(--panel);
+  left: 0;
+  bottom: 0;
+  width: 34%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.78), transparent);
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
+  opacity: 0;
+  transform: translateX(-220%);
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.2));
 }
 
 .item:hover {
@@ -364,8 +367,11 @@ button:disabled {
 }
 
 .item:hover::before {
-  opacity: 0.75;
-  animation: borderShimmer 3.4s linear infinite;
+  animation: borderShimmerTop 3.2s ease-in-out infinite;
+}
+
+.item:hover::after {
+  animation: borderShimmerBottom 3.2s ease-in-out infinite;
 }
 
 .item.dragging {
@@ -375,12 +381,40 @@ button:disabled {
 
 .item > * {
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
-@keyframes borderShimmer {
-  to {
-    transform: rotate(1turn);
+@keyframes borderShimmerTop {
+  0% {
+    transform: translateX(220%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.72;
+  }
+  88% {
+    opacity: 0.72;
+  }
+  100% {
+    transform: translateX(-220%);
+    opacity: 0;
+  }
+}
+
+@keyframes borderShimmerBottom {
+  0% {
+    transform: translateX(-220%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.72;
+  }
+  88% {
+    opacity: 0.72;
+  }
+  100% {
+    transform: translateX(220%);
+    opacity: 0;
   }
 }
 
