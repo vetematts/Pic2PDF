@@ -372,6 +372,7 @@ function stopTouchReorder() {
   touchDragging = false;
   touchDragId = null;
   touchLastTargetId = null;
+  document.body.classList.remove("reordering");
   if (touchMoveListener) {
     document.removeEventListener("touchmove", touchMoveListener);
     touchMoveListener = null;
@@ -389,12 +390,13 @@ function startTouchReorder(itemId) {
   touchDragging = true;
   touchDragId = itemId;
   touchLastTargetId = itemId;
+  document.body.classList.add("reordering");
   renderList();
 
   touchMoveListener = (event) => {
     if (!touchDragging || !touchDragId) return;
     event.preventDefault();
-    const touch = event.touches[0];
+    const touch = event.changedTouches[0] || event.touches[0];
     if (!touch) return;
     const target = document.elementFromPoint(touch.clientX, touch.clientY);
     const targetItem = target && target.closest ? target.closest(".item") : null;
