@@ -327,7 +327,7 @@ button:disabled {
 
 .item {
   display: grid;
-  grid-template-columns: 56px 1fr auto;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
   gap: 10px;
   align-items: center;
   padding: 8px;
@@ -394,10 +394,16 @@ body.touch-ui .meta {
 
 body.touch-ui .actions {
   grid-area: actions;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  justify-content: space-between;
   display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+body.touch-ui .actions-left {
+  display: inline-flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 body.touch-ui .actions .drag-handle,
@@ -434,10 +440,16 @@ body.touch-ui .actions button {
 
 .actions {
   display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
+  gap: 10px;
   justify-content: flex-end;
+  align-items: center;
   flex-shrink: 0;
+}
+
+.actions-left {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
 }
 
 .drag-handle {
