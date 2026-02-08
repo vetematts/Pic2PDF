@@ -125,6 +125,11 @@ body {
   display: grid;
 }
 
+.controls.advanced-on button.advanced {
+  display: inline-flex;
+  align-items: center;
+}
+
 .controls-core,
 .controls-actions {
   display: inline-flex;
