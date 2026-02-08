@@ -154,7 +154,7 @@ exportBtn.addEventListener("click", async () => {
           : item.dataUrl;
         const dataUrl = await processImage(rotatedUrl, maxDim, item.type, quality);
         const bytes = await dataUrlToBytes(dataUrl);
-        const embed = item.type === "image/png"
+        const embed = dataUrl.startsWith("data:image/png")
           ? await pdfDoc.embedPng(bytes)
           : await pdfDoc.embedJpg(bytes);
 
@@ -210,14 +210,18 @@ exportBtn.addEventListener("click", async () => {
 
 async function handleFiles(fileList) {
   const allFiles = Array.from(fileList);
-  const files = allFiles.filter((file) => ["image/png", "image/jpeg"].includes(file.type));
-  const unsupportedFiles = allFiles.filter((file) => !["image/png", "image/jpeg"].includes(file.type));
+  const files = allFiles.filter((file) =>
+    ["image/png", "image/jpeg", "image/webp"].includes(file.type)
+  );
+  const unsupportedFiles = allFiles.filter(
+    (file) => !["image/png", "image/jpeg", "image/webp"].includes(file.type)
+  );
 
   if (!files.length) {
     progress.hidden = true;
     progress.value = 0;
     if (unsupportedFiles.length) {
-      statusLabel.textContent = `No supported files. Use JPG/PNG. Skipped: ${sampleNames(unsupportedFiles)}.`;
+      statusLabel.textContent = `No supported files. Use JPG/PNG/WEBP. Skipped: ${sampleNames(unsupportedFiles)}.`;
       dismissStatusBtn.hidden = false;
     }
     return;
@@ -527,8 +531,11 @@ async function downscaleImage(dataUrl, maxDim, type) {
 }
 
 async function processImage(dataUrl, maxDim, type, quality) {
+  const outputType = type === "image/png" ? "image/png" : "image/jpeg";
   if (!maxDim && (quality >= 0.99 || type === "image/png")) {
-    return dataUrl;
+    if (type !== "image/webp") {
+      return dataUrl;
+    }
   }
 
   const img = await new Promise((resolve, reject) => {
@@ -548,10 +555,11 @@ async function processImage(dataUrl, maxDim, type, quality) {
   const ctx = canvas.getContext("2d");
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-  return canvasToDataUrl(canvas, type, quality);
+  return canvasToDataUrl(canvas, outputType, quality);
 }
 
 async function rotateImage(dataUrl, degrees, type) {
+  const outputType = type === "image/png" ? "image/png" : "image/jpeg";
   const img = await new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => resolve(image);
@@ -570,7 +578,7 @@ async function rotateImage(dataUrl, degrees, type) {
   ctx.rotate(radians);
   ctx.drawImage(img, -img.naturalWidth / 2, -img.naturalHeight / 2);
 
-  return canvasToDataUrl(canvas, type, 0.92);
+  return canvasToDataUrl(canvas, outputType, 0.92);
 }
 
 function canvasToDataUrl(canvas, type, quality) {
