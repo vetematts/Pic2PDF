@@ -13,6 +13,7 @@ const fitModeSelect = document.getElementById("fitMode");
 const marginSelect = document.getElementById("margin");
 const pageBgInput = document.getElementById("pageBg");
 const showSizesToggle = document.getElementById("showSizes");
+const resetDefaultsBtn = document.getElementById("resetDefaults");
 const advancedToggle = document.getElementById("advancedToggle");
 const controls = document.getElementById("controls");
 const advancedPanel = document.querySelector(".controls-advanced");
@@ -77,6 +78,22 @@ clearBtn.addEventListener("click", () => {
 
 showSizesToggle.addEventListener("change", () => {
   renderList();
+});
+
+resetDefaultsBtn.addEventListener("click", () => {
+  pageSizeSelect.value = "auto";
+  fitModeSelect.value = "contain";
+  marginSelect.value = "0";
+  pageBgInput.value = "#ffffff";
+  downscaleSelect.value = "2000";
+  qualityRange.value = "0.9";
+  qualityValue.textContent = "0.90";
+  showSizesToggle.checked = false;
+
+  renderList();
+  scheduleEstimate();
+  statusLabel.textContent = "Advanced settings reset to defaults.";
+  dismissStatusBtn.hidden = false;
 });
 
 function openAdvanced() {
