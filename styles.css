@@ -142,6 +142,20 @@ body {
   justify-self: end;
 }
 
+.name-input {
+  width: 170px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--soft);
+  color: var(--ink);
+  font-size: 0.84rem;
+}
+
+.name-input::placeholder {
+  color: var(--muted);
+}
+
 .controls-advanced {
   grid-column: 1 / -1;
   display: block;
@@ -417,6 +431,10 @@ body.touch-ui .actions .drag-handle,
 body.touch-ui .actions button {
   font-size: 0.8rem;
   padding: 7px 10px;
+}
+
+body.touch-ui .name-input {
+  width: 140px;
 }
 
 .thumb {
