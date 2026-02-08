@@ -148,46 +148,50 @@ exportBtn.addEventListener("click", async () => {
 
     for (let i = 0; i < items.length; i += 1) {
       const item = items[i];
-      const rotatedUrl = item.rotation
-        ? await rotateImage(item.dataUrl, item.rotation, item.type)
-        : item.dataUrl;
-      const dataUrl = await processImage(rotatedUrl, maxDim, item.type, quality);
-      const bytes = await dataUrlToBytes(dataUrl);
-      const embed = item.type === "image/png"
-        ? await pdfDoc.embedPng(bytes)
-        : await pdfDoc.embedJpg(bytes);
+      try {
+        const rotatedUrl = item.rotation
+          ? await rotateImage(item.dataUrl, item.rotation, item.type)
+          : item.dataUrl;
+        const dataUrl = await processImage(rotatedUrl, maxDim, item.type, quality);
+        const bytes = await dataUrlToBytes(dataUrl);
+        const embed = item.type === "image/png"
+          ? await pdfDoc.embedPng(bytes)
+          : await pdfDoc.embedJpg(bytes);
 
-      const { width, height } = embed.size();
-      const pageSize = getPageSize(pageSizeSelect.value, width, height, margin);
-      const page = pdfDoc.addPage([pageSize.width, pageSize.height]);
-      const bgColor = hexToRgb(pageBg);
-      if (bgColor) {
-        page.drawRectangle({
-          x: 0,
-          y: 0,
-          width: pageSize.width,
-          height: pageSize.height,
-          color: PDFLib.rgb(bgColor.r, bgColor.g, bgColor.b),
+        const { width, height } = embed.size();
+        const pageSize = getPageSize(pageSizeSelect.value, width, height, margin);
+        const page = pdfDoc.addPage([pageSize.width, pageSize.height]);
+        const bgColor = hexToRgb(pageBg);
+        if (bgColor) {
+          page.drawRectangle({
+            x: 0,
+            y: 0,
+            width: pageSize.width,
+            height: pageSize.height,
+            color: PDFLib.rgb(bgColor.r, bgColor.g, bgColor.b),
+          });
+        }
+
+        const placement = getPlacement(
+          pageSize.width - margin * 2,
+          pageSize.height - margin * 2,
+          width,
+          height,
+          fitModeSelect.value
+        );
+
+        page.drawImage(embed, {
+          x: placement.x + margin,
+          y: placement.y + margin,
+          width: placement.width,
+          height: placement.height,
         });
+        statusLabel.textContent = `Added ${i + 1} / ${items.length}`;
+        progress.value = i + 1;
+        await new Promise((r) => setTimeout(r, 0));
+      } catch (error) {
+        throw new Error(`Failed on "${item.name}". The image may be corrupted.`);
       }
-
-      const placement = getPlacement(
-        pageSize.width - margin * 2,
-        pageSize.height - margin * 2,
-        width,
-        height,
-        fitModeSelect.value
-      );
-
-      page.drawImage(embed, {
-        x: placement.x + margin,
-        y: placement.y + margin,
-        width: placement.width,
-        height: placement.height,
-      });
-      statusLabel.textContent = `Added ${i + 1} / ${items.length}`;
-      progress.value = i + 1;
-      await new Promise((r) => setTimeout(r, 0));
     }
 
     const pdfBytes = await pdfDoc.save();
@@ -196,7 +200,7 @@ exportBtn.addEventListener("click", async () => {
     dismissStatusBtn.hidden = false;
   } catch (error) {
     console.error(error);
-    statusLabel.textContent = "Failed to export.";
+    statusLabel.textContent = error.message || "Failed to export.";
     dismissStatusBtn.hidden = false;
   } finally {
     exportBtn.disabled = items.length === 0;
@@ -205,11 +209,19 @@ exportBtn.addEventListener("click", async () => {
 });
 
 async function handleFiles(fileList) {
-  const files = Array.from(fileList).filter((file) =>
-    ["image/png", "image/jpeg"].includes(file.type)
-  );
+  const allFiles = Array.from(fileList);
+  const files = allFiles.filter((file) => ["image/png", "image/jpeg"].includes(file.type));
+  const unsupportedFiles = allFiles.filter((file) => !["image/png", "image/jpeg"].includes(file.type));
 
-  if (!files.length) return;
+  if (!files.length) {
+    progress.hidden = true;
+    progress.value = 0;
+    if (unsupportedFiles.length) {
+      statusLabel.textContent = `No supported files. Use JPG/PNG. Skipped: ${sampleNames(unsupportedFiles)}.`;
+      dismissStatusBtn.hidden = false;
+    }
+    return;
+  }
 
   statusLabel.textContent = "Loading images...";
   progress.hidden = false;
@@ -218,26 +230,57 @@ async function handleFiles(fileList) {
   dismissStatusBtn.hidden = true;
 
   let loaded = 0;
+  let failed = 0;
+  const failedNames = [];
+  let processed = 0;
   for (const file of files) {
-    const dataUrl = await fileToDataUrl(file);
-    const dims = await getImageSize(dataUrl);
-    items.push({
-      id: crypto.randomUUID(),
-      name: file.name,
-      type: file.type,
-      dataUrl,
-      width: dims.width,
-      height: dims.height,
-      rotation: 0,
-    });
-    loaded += 1;
-    progress.value = loaded;
+    try {
+      const dataUrl = await fileToDataUrl(file);
+      const dims = await getImageSize(dataUrl);
+      items.push({
+        id: crypto.randomUUID(),
+        name: file.name,
+        type: file.type,
+        dataUrl,
+        width: dims.width,
+        height: dims.height,
+        rotation: 0,
+      });
+      loaded += 1;
+    } catch (error) {
+      failed += 1;
+      failedNames.push(file.name);
+    } finally {
+      processed += 1;
+      progress.value = processed;
+    }
   }
 
   renderList();
-  statusLabel.textContent = `Loaded ${files.length} image${files.length === 1 ? "" : "s"}.`;
+  const skipped = failed + unsupportedFiles.length;
+  const skippedParts = [];
+  if (unsupportedFiles.length) {
+    skippedParts.push(`${unsupportedFiles.length} unsupported`);
+  }
+  if (failed) {
+    skippedParts.push(`${failed} unreadable`);
+  }
+  statusLabel.textContent = skipped
+    ? `Loaded ${loaded} image${loaded === 1 ? "" : "s"}. Skipped ${skippedParts.join(", ")}.`
+    : `Loaded ${loaded} image${loaded === 1 ? "" : "s"}.`;
+  if (unsupportedFiles.length || failed) {
+    const detailNames = failedNames.concat(unsupportedFiles.map((file) => file.name));
+    statusLabel.textContent += ` (${sampleNames(detailNames)})`;
+  }
   dismissStatusBtn.hidden = false;
   scheduleEstimate();
+}
+
+function sampleNames(filesOrNames, max = 2) {
+  const names = filesOrNames.map((entry) => (typeof entry === "string" ? entry : entry.name));
+  const picked = names.slice(0, max).join(", ");
+  const rest = names.length > max ? ` +${names.length - max} more` : "";
+  return `${picked}${rest}`;
 }
 
 function renderList() {
