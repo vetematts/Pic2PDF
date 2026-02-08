@@ -4,6 +4,7 @@ const dropZone = document.getElementById("dropZone");
 const list = document.getElementById("list");
 const emptyState = document.getElementById("emptyState");
 const exportBtn = document.getElementById("exportBtn");
+const fileNameInput = document.getElementById("fileNameInput");
 const clearBtn = document.getElementById("clearBtn");
 const downscaleSelect = document.getElementById("downscale");
 const qualityRange = document.getElementById("quality");
@@ -40,6 +41,11 @@ if (touchUiQuery.addEventListener) {
 } else if (touchUiQuery.addListener) {
   touchUiQuery.addListener(syncTouchUi);
 }
+
+fileNameInput.value = defaultPdfName();
+fileNameInput.addEventListener("blur", () => {
+  fileNameInput.value = normalizePdfName(fileNameInput.value);
+});
 
 fileInput.addEventListener("change", (event) => {
   handleFiles(event.target.files);
@@ -212,7 +218,9 @@ exportBtn.addEventListener("click", async () => {
     }
 
     const pdfBytes = await pdfDoc.save();
-    downloadBlob(new Blob([pdfBytes], { type: "application/pdf" }), "pic2pdf.pdf");
+    const exportName = normalizePdfName(fileNameInput.value);
+    fileNameInput.value = exportName;
+    downloadBlob(new Blob([pdfBytes], { type: "application/pdf" }), exportName);
     statusLabel.textContent = "Done! PDF downloaded.";
     dismissStatusBtn.hidden = false;
   } catch (error) {
@@ -648,6 +656,27 @@ function downloadBlob(blob, filename) {
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
+}
+
+function defaultPdfName() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, "0");
+  const d = String(now.getDate()).padStart(2, "0");
+  return `pic2pdf-${y}-${m}-${d}.pdf`;
+}
+
+function normalizePdfName(input) {
+  const raw = typeof input === "string" ? input.trim() : "";
+  const fallback = defaultPdfName();
+  const base = raw || fallback;
+  const noExt = base.replace(/\.pdf$/i, "");
+  const safe = noExt
+    .replace(/[<>:"/\\|?*\x00-\x1F]/g, "-")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 80);
+  return `${safe || fallback.replace(/\.pdf$/i, "")}.pdf`;
 }
 
 function hexToRgb(hex) {
