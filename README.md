@@ -1,15 +1,15 @@
 # Pic2PDF
 
-Client-side JPG/PNG to PDF converter. No uploads, runs entirely in the browser.
+Convert images to one PDF in your browser.
+No upload. No backend.
 
-## Features
-- Add multiple JPG/PNG files
-- Drag-and-drop reordering
-- One-click PDF export
-- Optional downscale to reduce file size
+Supports JPG, PNG, and WEBP.
 
-## Run locally
-Just open `index.html` in a browser.
+## Use
+1. Open `index.html`
+2. Add images
+3. Reorder if needed
+4. Click `Export PDF`
 
 ## Deploy
-This is a static site; GitHub Pages works well.
+Publish the folder as a static site (for example, GitHub Pages).
