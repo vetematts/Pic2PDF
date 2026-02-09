@@ -109,11 +109,16 @@ body {
 .controls {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 10px 14px;
+  column-gap: 14px;
+  row-gap: 0;
   align-items: center;
   margin-top: 14px;
   justify-content: stretch;
   width: 100%;
+}
+
+.controls.advanced-on {
+  row-gap: 10px;
 }
 
 .controls .advanced {
