@@ -10,6 +10,3 @@ Supports JPG, PNG, and WEBP.
 2. Add images
 3. Reorder if needed
 4. Click `Export PDF`
-
-## Deploy
-Publish the folder as a static site (for example, GitHub Pages).
