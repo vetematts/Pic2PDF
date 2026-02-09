@@ -5,8 +5,8 @@ No upload. No backend.
 
 Supports JPG, PNG, and WEBP.
 
-## Use
-1. Open `index.html`
-2. Add images
-3. Reorder if needed
-4. Click `Export PDF`
+## How to use
+1. Open the app in your browser.
+2. Tap `Upload images` and select your photos.
+3. Reorder if needed.
+4. Click `Export PDF`.
