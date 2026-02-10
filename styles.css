@@ -147,6 +147,12 @@ body {
   justify-self: end;
 }
 
+.field-tag {
+  font-size: 0.76rem;
+  color: var(--muted);
+  letter-spacing: 0.2px;
+}
+
 .name-input {
   width: 170px;
   padding: 8px 10px;
@@ -440,6 +446,10 @@ body.touch-ui .actions button {
 
 body.touch-ui .name-input {
   width: 140px;
+}
+
+body.touch-ui .field-tag {
+  font-size: 0.72rem;
 }
 
 .thumb {
