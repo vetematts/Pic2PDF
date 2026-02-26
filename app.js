@@ -24,11 +24,47 @@ const progress = document.getElementById("progress");
 const dismissStatusBtn = document.getElementById("dismissStatus");
 const estimateLabel = document.getElementById("estimate");
 
+const STORAGE_KEY = "pic2pdf-settings";
 const items = [];
 let dragId = null;
 let estimateToken = 0;
 const touchUiQuery = window.matchMedia("(pointer: coarse), (max-width: 900px)");
 let isTouchDevice = touchUiQuery.matches;
+
+function loadSettings() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const s = JSON.parse(raw);
+    if (s.pageSize) pageSizeSelect.value = s.pageSize;
+    if (s.fitMode) fitModeSelect.value = s.fitMode;
+    if (s.margin !== undefined) marginSelect.value = String(s.margin);
+    if (s.pageBg) pageBgInput.value = s.pageBg;
+    if (s.downscale !== undefined) downscaleSelect.value = String(s.downscale);
+    if (s.quality !== undefined) {
+      qualityRange.value = String(s.quality);
+      qualityValue.textContent = Number(s.quality).toFixed(2);
+    }
+    if (s.showSizes !== undefined) showSizesToggle.checked = s.showSizes;
+    if (s.fileName && typeof s.fileName === "string") fileNameInput.value = normalizePdfName(s.fileName);
+  } catch (_) {}
+}
+
+function saveSettings() {
+  try {
+    const s = {
+      pageSize: pageSizeSelect.value,
+      fitMode: fitModeSelect.value,
+      margin: Number(marginSelect.value),
+      pageBg: pageBgInput.value,
+      downscale: Number(downscaleSelect.value) || 0,
+      quality: Number(qualityRange.value),
+      showSizes: showSizesToggle.checked,
+      fileName: fileNameInput.value.trim() || defaultPdfName(),
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+  } catch (_) {}
+}
 
 function syncTouchUi() {
   isTouchDevice = touchUiQuery.matches;
@@ -42,10 +78,13 @@ if (touchUiQuery.addEventListener) {
   touchUiQuery.addListener(syncTouchUi);
 }
 
-fileNameInput.value = defaultPdfName();
+loadSettings();
+if (!fileNameInput.value.trim()) fileNameInput.value = defaultPdfName();
 fileNameInput.addEventListener("blur", () => {
   fileNameInput.value = normalizePdfName(fileNameInput.value);
+  saveSettings();
 });
+fileNameInput.addEventListener("change", saveSettings);
 
 fileInput.addEventListener("change", (event) => {
   handleFiles(event.target.files);
@@ -95,7 +134,7 @@ resetDefaultsBtn.addEventListener("click", () => {
   qualityRange.value = "0.9";
   qualityValue.textContent = "0.90";
   showSizesToggle.checked = false;
-
+  saveSettings();
   renderList();
   scheduleEstimate();
   statusLabel.textContent = "Advanced settings reset to defaults.";
@@ -139,17 +178,31 @@ advancedToggle.addEventListener("click", () => {
 qualityRange.addEventListener("input", () => {
   qualityValue.textContent = Number(qualityRange.value).toFixed(2);
 });
-
 qualityRange.addEventListener("change", () => {
+  saveSettings();
   scheduleEstimate();
 });
 
 downscaleSelect.addEventListener("change", () => {
+  saveSettings();
   scheduleEstimate();
 });
 
+pageSizeSelect.addEventListener("change", saveSettings);
+fitModeSelect.addEventListener("change", saveSettings);
+marginSelect.addEventListener("change", saveSettings);
+pageBgInput.addEventListener("change", saveSettings);
+showSizesToggle.addEventListener("change", saveSettings);
+
 dismissStatusBtn.addEventListener("click", () => {
   clearStatus();
+});
+
+document.addEventListener("keydown", (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === "e") {
+    e.preventDefault();
+    if (!exportBtn.disabled) exportBtn.click();
+  }
 });
 
 exportBtn.addEventListener("click", async () => {
@@ -220,6 +273,7 @@ exportBtn.addEventListener("click", async () => {
     const pdfBytes = await pdfDoc.save();
     const exportName = normalizePdfName(fileNameInput.value);
     fileNameInput.value = exportName;
+    saveSettings();
     downloadBlob(new Blob([pdfBytes], { type: "application/pdf" }), exportName);
     statusLabel.textContent = "Done! PDF downloaded.";
     dismissStatusBtn.hidden = false;
@@ -688,4 +742,10 @@ function hexToRgb(hex) {
   const b = Number.parseInt(value.slice(4, 6), 16);
   if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) return null;
   return { r: r / 255, g: g / 255, b: b / 255 };
+}
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  });
 }

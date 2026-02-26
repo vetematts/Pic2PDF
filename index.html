@@ -4,12 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#151515" />
+    <meta name="description" content="Convert images to one PDF in your browser. No upload. No backend." />
+    <link rel="manifest" href="manifest.json" />
     <title>Pic2PDF</title>
     <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png" />
     <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260206" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="styles.css?v=20260226" />
   </head>
   <body>
     <main class="wrap">
@@ -36,7 +40,7 @@
                 y="66"
                 text-anchor="middle"
                 font-size="15"
-                font-family="IBM Plex Sans, Segoe UI, sans-serif"
+                font-family="Outfit, system-ui, sans-serif"
                 font-weight="800"
                 fill="#ffffff"
               >
@@ -46,7 +50,7 @@
           </span>
           <h1>Pic2PDF</h1>
         </div>
-        <p>JPG/PNG to a single PDF. No uploads.</p>
+        <p>Images → one PDF. All in your browser — nothing leaves your device.</p>
       </header>
 
       <section class="panel">
@@ -55,8 +59,8 @@
             <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" multiple />
             Upload images
           </label>
-          <p id="emptyState" class="empty-state">Drop JPG/PNG -> Export PDF</p>
-          <p class="hint">Click or drag and drop. Reorder by dragging.</p>
+          <p id="emptyState" class="empty-state">Drop images or tap to choose</p>
+          <p class="hint">JPG, PNG, WebP · Reorder by dragging · <kbd>⌘E</kbd> to export</p>
         </div>
 
         <div class="controls sticky-bar" id="controls">
@@ -142,11 +146,11 @@
       </section>
 
       <footer class="foot">
-        <p>Runs locally in your browser.</p>
+        <p>100% local · No server · No account</p>
       </footer>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-    <script src="app.js?v=20260206"></script>
+    <script src="app.js?v=20260226"></script>
   </body>
 </html>
