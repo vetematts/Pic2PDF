@@ -713,6 +713,29 @@ button:active:not(:disabled),
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
   }
 
+  .controls {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .controls-actions {
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .name-input {
+    min-width: 0;
+    flex: 1 1 100px;
+    max-width: 100%;
+    width: auto;
+  }
+
+  body.touch-ui .name-input {
+    width: auto;
+  }
+
   .panel {
     overflow: visible;
   }
