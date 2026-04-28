@@ -3,14 +3,21 @@
   "short_name": "Pic2PDF",
   "description": "Convert images to one PDF in your browser. No upload. No backend.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#151515",
   "theme_color": "#151515",
   "orientation": "any",
   "icons": [
     {
-      "src": "assets/icons/icon-192.png",
+      "src": "assets/icons/icon-192-20260310.png",
       "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512-20260310.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }

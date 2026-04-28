@@ -1,4 +1,4 @@
-const CACHE = "pic2pdf-v1";
+const CACHE = "pic2pdf-v2";
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
