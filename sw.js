@@ -1,4 +1,4 @@
-const CACHE = "pic2pdf-v2";
+const CACHE = "origami-v1";
 
 self.addEventListener("install", (e) => {
   e.waitUntil(

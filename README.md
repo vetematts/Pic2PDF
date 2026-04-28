@@ -1,6 +1,10 @@
-# Pic2PDF
+# Origami
 
-**Images → one PDF. All in your browser — nothing leaves your device.**
+**A suite of fast, private, browser-only file tools. Nothing leaves your device.**
+
+## Tools
+
+### Pic2PDF — Images → one PDF
 
 - No upload, no backend, no account
 - JPG, PNG, WebP
@@ -9,7 +13,7 @@
 - Settings and filename remembered (localStorage)
 - Keyboard: **⌘E** / **Ctrl+E** to export
 
-## How to use
+#### How to use
 
 1. Open the app in your browser.
 2. Drop images or tap **Upload images** and select files.
