@@ -8,7 +8,7 @@ self.addEventListener("install", (e) => {
         "./index.html",
         "./styles.css",
         "./app.js",
-        "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js",
+        "./shared/vendor/pdf-lib.min.js",
       ])
     )
   );
@@ -27,7 +27,7 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
   const url = new URL(e.request.url);
-  if (url.origin !== location.origin && url.origin !== "https://cdn.jsdelivr.net") return;
+  if (url.origin !== location.origin) return;
   e.respondWith(
     caches.match(e.request).then((cached) => cached || fetch(e.request))
   );
