@@ -1,4 +1,4 @@
-const CACHE = "origami-v1";
+const CACHE = "origami-v2";
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
