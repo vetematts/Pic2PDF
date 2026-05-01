@@ -1,13 +1,13 @@
-const CACHE = "origami-v2";
+const CACHE = "origami-v3";
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
     caches.open(CACHE).then((cache) =>
       cache.addAll([
-        "./",
-        "./index.html",
-        "./styles.css",
-        "./app.js",
+        "./tools/pic2pdf/",
+        "./tools/pic2pdf/index.html",
+        "./tools/pic2pdf/styles.css",
+        "./tools/pic2pdf/app.js",
         "./shared/vendor/pdf-lib.min.js",
       ])
     )
