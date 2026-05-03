@@ -19,67 +19,8 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
     />
+    <link rel="stylesheet" href="shared/styles.css" />
     <style>
-      :root {
-        --bg: #171717;
-        --ink: #f5f6f7;
-        --muted: #b1b1b1;
-        --accent: #4aa5ff;
-        --accent-hover: #6bb8ff;
-        --panel: #202020;
-        --border: #343434;
-        --soft: #2a2a2a;
-        --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
-      }
-
-      @media (prefers-color-scheme: light) {
-        :root {
-          --bg: #f8f9fa;
-          --ink: #1a1a1a;
-          --muted: #5c5c5c;
-          --accent: #2563eb;
-          --accent-hover: #3b82f6;
-          --panel: #ffffff;
-          --border: #e5e7eb;
-          --soft: #f1f3f4;
-          --focus-ring: 0 0 0 2px var(--panel), 0 0 0 4px var(--accent);
-        }
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        background: var(--bg);
-      }
-
-      body {
-        margin: 0;
-        font-family: "Outfit", system-ui, sans-serif;
-        color: var(--ink);
-        background:
-          radial-gradient(ellipse 120% 80% at 20% 20%, rgba(42, 42, 42, 0.9) 0%, transparent 50%),
-          radial-gradient(ellipse 80% 60% at 90% 0%, rgba(74, 165, 255, 0.12), transparent 45%),
-          radial-gradient(ellipse 60% 80% at 0% 90%, rgba(255, 70, 70, 0.08), transparent 50%);
-        background-color: var(--bg);
-        min-height: 100vh;
-        line-height: 1.5;
-      }
-
-      @media (prefers-color-scheme: light) {
-        body {
-          background:
-            radial-gradient(
-              ellipse 100% 70% at 30% 10%,
-              rgba(255, 255, 255, 0.9) 0%,
-              transparent 50%
-            ),
-            radial-gradient(ellipse 70% 50% at 95% 5%, rgba(37, 99, 235, 0.08), transparent 45%);
-          background-color: var(--bg);
-        }
-      }
-
       .wrap {
         max-width: 960px;
         margin: 0 auto;
