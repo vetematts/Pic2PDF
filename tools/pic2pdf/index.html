@@ -146,12 +146,13 @@
         </div>
       </section>
 
-      <footer class="foot">
-        <p>100% local · No server · No account</p>
-      </footer>
     </main>
 
     <script src="../../shared/vendor/pdf-lib.min.js"></script>
     <script src="app.js?v=20260226"></script>
+    <script src="../../shared/shell.js"></script>
+    <script>
+      Shell.mount({ tool: "Pic2PDF", rootHref: "../../" });
+    </script>
   </body>
 </html>

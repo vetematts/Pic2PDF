@@ -109,28 +109,6 @@
         border-color: var(--border);
         transform: none;
       }
-
-      .foot {
-        margin-top: clamp(48px, 8vw, 80px);
-        text-align: center;
-        color: var(--muted);
-        font-size: 0.85rem;
-      }
-
-      .foot p {
-        margin: 4px 0;
-      }
-
-      .foot a {
-        color: var(--accent);
-        text-decoration: none;
-      }
-
-      .foot a:hover,
-      .foot a:focus-visible {
-        color: var(--accent-hover);
-        text-decoration: underline;
-      }
     </style>
   </head>
   <body>
@@ -153,12 +131,11 @@
         </div>
       </section>
 
-      <footer class="foot">
-        <p>100% local · No server · No account</p>
-      </footer>
     </main>
 
+    <script src="shared/shell.js"></script>
     <script>
+      Shell.mount();
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker.register("./sw.js").catch(() => {});

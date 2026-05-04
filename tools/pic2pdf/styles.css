@@ -585,14 +585,6 @@ progress::-moz-progress-bar {
   height: 14px;
 }
 
-.foot {
-  text-align: center;
-  margin-top: 18px;
-  color: var(--muted);
-  font-size: 0.8rem;
-  opacity: 0.9;
-}
-
 button:hover:not(:disabled),
 .file-btn:hover {
   transform: translateY(-1px);

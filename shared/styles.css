@@ -77,3 +77,69 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ----------------------------------------------------------------------------
+ * Suite chrome — header (top nav) and footer injected by shared/shell.js.
+ * Sits outside <main>, full-width, on every page.
+ * -------------------------------------------------------------------------- */
+
+.origami-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+  background: var(--glass);
+  backdrop-filter: saturate(180%) blur(8px);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+}
+
+.origami-nav-brand {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: color 120ms ease;
+}
+
+.origami-nav-brand:hover,
+.origami-nav-brand:focus-visible {
+  color: var(--accent);
+  outline: none;
+}
+
+.origami-nav-sep {
+  color: var(--muted);
+  user-select: none;
+}
+
+.origami-nav-tool {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.origami-foot {
+  margin-top: clamp(40px, 6vw, 64px);
+  padding: 24px 16px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.origami-foot-sep {
+  margin: 0 4px;
+  opacity: 0.6;
+}
+
+.origami-foot-link {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.origami-foot-link:hover,
+.origami-foot-link:focus-visible {
+  color: var(--accent-hover);
+  text-decoration: underline;
+  outline: none;
+}
