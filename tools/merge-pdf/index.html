@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#151515" />
+    <meta
+      name="description"
+      content="Merge multiple PDFs into one. All in your browser. Nothing leaves your device."
+    />
+    <link rel="manifest" href="../../manifest.json" />
+    <title>Merge PDF · Origami</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icons/icon-192.png" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/icons/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="../../shared/styles.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="hero">
+        <h1>Merge PDF</h1>
+        <p>Combine multiple PDFs into one. Nothing leaves your device.</p>
+      </header>
+
+      <section class="panel">
+        <div id="dropZone" class="drop">
+          <label class="file-btn">
+            <input id="fileInput" type="file" accept="application/pdf,.pdf" multiple />
+            Add PDFs
+          </label>
+          <p id="emptyState" class="empty-state">Drop PDFs or tap to choose</p>
+          <p class="hint">Reorder by dragging · click Merge to download</p>
+        </div>
+
+        <div class="controls">
+          <label for="fileNameInput" class="field-tag">Filename</label>
+          <input id="fileNameInput" class="name-input" type="text" placeholder="merged.pdf" />
+          <button id="mergeBtn" class="primary" disabled>Merge PDF</button>
+          <button id="clearBtn" class="ghost" disabled>Clear</button>
+        </div>
+
+        <ul id="list" class="list" aria-live="polite"></ul>
+
+        <div class="status">
+          <span id="count">0 PDFs</span>
+          <progress id="progress" value="0" max="1" hidden></progress>
+          <span id="status"></span>
+        </div>
+      </section>
+    </main>
+
+    <script src="../../shared/vendor/pdf-lib.min.js"></script>
+    <script src="app.js"></script>
+    <script src="../../shared/shell.js"></script>
+    <script>
+      Shell.mount({ tool: "Merge PDF", rootHref: "../../" });
+    </script>
+  </body>
+</html>

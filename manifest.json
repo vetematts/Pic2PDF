@@ -28,6 +28,19 @@
           "type": "image/png"
         }
       ]
+    },
+    {
+      "name": "Merge PDF",
+      "short_name": "Merge PDF",
+      "description": "Combine multiple PDFs into one",
+      "url": "./tools/merge-pdf/",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
