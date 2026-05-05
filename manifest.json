@@ -2,7 +2,7 @@
   "name": "Origami",
   "short_name": "Origami",
   "description": "Browser-only file tools. Nothing leaves your device.",
-  "start_url": "./tools/pic2pdf/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#151515",
   "theme_color": "#151515",
@@ -13,6 +13,21 @@
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Pic2PDF",
+      "short_name": "Pic2PDF",
+      "description": "Combine images into a single PDF",
+      "url": "./tools/pic2pdf/",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
