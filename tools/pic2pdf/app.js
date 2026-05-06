@@ -46,7 +46,6 @@ function loadSettings() {
       qualityValue.textContent = Number(s.quality).toFixed(2);
     }
     if (s.showSizes !== undefined) showSizesToggle.checked = s.showSizes;
-    if (s.fileName && typeof s.fileName === "string") fileNameInput.value = normalizePdfName(s.fileName);
   } catch (_) {}
 }
 
@@ -60,7 +59,6 @@ function saveSettings() {
       downscale: Number(downscaleSelect.value) || 0,
       quality: Number(qualityRange.value),
       showSizes: showSizesToggle.checked,
-      fileName: fileNameInput.value.trim() || defaultPdfName(),
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
   } catch (_) {}
@@ -79,12 +77,40 @@ if (touchUiQuery.addEventListener) {
 }
 
 loadSettings();
-if (!fileNameInput.value.trim()) fileNameInput.value = defaultPdfName();
+
+// Filename behaviour: input stays empty; placeholder shows the dynamic
+// default (today's date when the list is empty, or the first image's
+// basename once images are added). Typed names override the placeholder
+// at export time but are NOT persisted across sessions — fixes the stale-
+// date bug where the saved filename never updated.
+function suggestedPdfName() {
+  const first = items[0];
+  if (first && first.file && first.file.name) {
+    const baseName = first.file.name.replace(/\.[^.]+$/, "");
+    const safe = baseName
+      .replace(/[<>:"/\\|?*\x00-\x1F]/g, "-")
+      .trim()
+      .slice(0, 80);
+    if (safe) return `${safe}.pdf`;
+  }
+  return defaultPdfName();
+}
+
+function updateFilenamePlaceholder() {
+  fileNameInput.placeholder = suggestedPdfName();
+}
+
+function effectivePdfName() {
+  const typed = fileNameInput.value.trim();
+  return normalizePdfName(typed || suggestedPdfName());
+}
+
+updateFilenamePlaceholder();
+
 fileNameInput.addEventListener("blur", () => {
-  fileNameInput.value = normalizePdfName(fileNameInput.value);
-  saveSettings();
+  const typed = fileNameInput.value.trim();
+  if (typed) fileNameInput.value = normalizePdfName(typed);
 });
-fileNameInput.addEventListener("change", saveSettings);
 
 fileInput.addEventListener("change", (event) => {
   handleFiles(event.target.files);
@@ -271,9 +297,7 @@ exportBtn.addEventListener("click", async () => {
     }
 
     const pdfBytes = await pdfDoc.save();
-    const exportName = normalizePdfName(fileNameInput.value);
-    fileNameInput.value = exportName;
-    saveSettings();
+    const exportName = effectivePdfName();
     downloadBlob(new Blob([pdfBytes], { type: "application/pdf" }), exportName);
     statusLabel.textContent = "Done! PDF downloaded.";
     dismissStatusBtn.hidden = false;
@@ -495,6 +519,7 @@ function updateUI() {
   exportBtn.disabled = items.length === 0;
   clearBtn.disabled = items.length === 0;
   emptyState.hidden = items.length > 0;
+  updateFilenamePlaceholder();
 }
 
 function getRotatedDims(item) {
