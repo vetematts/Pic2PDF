@@ -1,4 +1,4 @@
-const CACHE = "origami-v5";
+const CACHE = "origami-v6";
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -9,6 +9,8 @@ self.addEventListener("install", (e) => {
         "./shared/styles.css",
         "./shared/shell.js",
         "./shared/vendor/pdf-lib.min.js",
+        "./shared/vendor/pdfjs/pdf.min.js",
+        "./shared/vendor/pdfjs/pdf.worker.min.js",
         "./tools/pic2pdf/",
         "./tools/pic2pdf/index.html",
         "./tools/pic2pdf/styles.css",
