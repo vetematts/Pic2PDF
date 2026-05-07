@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#151515" />
     <meta
       name="description"
-      content="Merge multiple PDFs into one. All in your browser. Nothing leaves your device."
+      content="Merge PDFs and rearrange pages in your browser. Nothing leaves your device."
     />
     <link rel="manifest" href="../../manifest.json" />
     <title>Merge PDF · Origami</title>
@@ -26,7 +26,7 @@
     <main class="wrap">
       <header class="hero">
         <h1>Merge PDF</h1>
-        <p>Combine multiple PDFs into one. Nothing leaves your device.</p>
+        <p>Combine PDFs and rearrange pages. Nothing leaves your device.</p>
       </header>
 
       <section class="panel">
@@ -36,20 +36,20 @@
             Add PDFs
           </label>
           <p id="emptyState" class="empty-state">Drop PDFs or tap to choose</p>
-          <p class="hint">Reorder by dragging · click Merge to download</p>
+          <p class="hint">Drag pages to reorder · click × to remove · ⌘E to save</p>
         </div>
 
         <div class="controls">
           <label for="fileNameInput" class="field-tag">Filename</label>
           <input id="fileNameInput" class="name-input" type="text" placeholder="merged.pdf" />
-          <button id="mergeBtn" class="primary" disabled>Merge PDF</button>
+          <button id="mergeBtn" class="primary" disabled>Save PDF</button>
           <button id="clearBtn" class="ghost" disabled>Clear</button>
         </div>
 
-        <ul id="list" class="list" aria-live="polite"></ul>
+        <div id="pages" class="pages" aria-live="polite"></div>
 
         <div class="status">
-          <span id="count">0 PDFs</span>
+          <span id="count">0 pages</span>
           <progress id="progress" value="0" max="1" hidden></progress>
           <span id="status"></span>
         </div>
@@ -57,6 +57,7 @@
     </main>
 
     <script src="../../shared/vendor/pdf-lib.min.js"></script>
+    <script src="../../shared/vendor/pdfjs/pdf.min.js"></script>
     <script src="app.js"></script>
     <script src="../../shared/shell.js"></script>
     <script>
