@@ -41,6 +41,19 @@
           "type": "image/png"
         }
       ]
+    },
+    {
+      "name": "Pdf2Pic",
+      "short_name": "Pdf2Pic",
+      "description": "Extract PDF pages as images",
+      "url": "./tools/pdf2pic/",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
