@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#151515" />
+    <meta
+      name="description"
+      content="Extract pages from a PDF as PNG, JPG, or WebP images. All in your browser. Nothing leaves your device."
+    />
+    <link rel="manifest" href="../../manifest.json" />
+    <title>Pdf2Pic · Origami</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icons/icon-192.png" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/icons/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="../../shared/styles.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="hero">
+        <h1>Pdf2Pic</h1>
+        <p>Extract PDF pages as images. Nothing leaves your device.</p>
+      </header>
+
+      <section class="panel">
+        <div id="dropZone" class="drop">
+          <label class="file-btn">
+            <input id="fileInput" type="file" accept="application/pdf,.pdf" multiple />
+            Add PDFs
+          </label>
+          <p id="emptyState" class="empty-state">Drop PDFs or tap to choose</p>
+          <p class="hint">Click × to skip a page · ⌘E to export</p>
+        </div>
+
+        <div class="controls">
+          <div class="select inline">
+            <label for="formatSelect">Format</label>
+            <select id="formatSelect">
+              <option value="png" selected>PNG</option>
+              <option value="jpeg">JPG</option>
+              <option value="webp">WebP</option>
+            </select>
+          </div>
+          <div class="select inline">
+            <label for="scaleSelect">Scale</label>
+            <select id="scaleSelect">
+              <option value="1">1× (screen)</option>
+              <option value="2" selected>2×</option>
+              <option value="3">3× (high DPI)</option>
+            </select>
+          </div>
+          <div class="select range" id="qualityWrap">
+            <label for="qualityRange">Quality <span id="qualityValue">0.92</span></label>
+            <input id="qualityRange" type="range" min="0.5" max="1" step="0.02" value="0.92" />
+          </div>
+        </div>
+
+        <div class="controls">
+          <label for="fileNameInput" class="field-tag">Filename</label>
+          <input id="fileNameInput" class="name-input" type="text" placeholder="pdf2pic.zip" />
+          <button id="exportBtn" class="primary" disabled>Export</button>
+          <button id="clearBtn" class="ghost" disabled>Clear</button>
+        </div>
+
+        <div id="pages" class="pages" aria-live="polite"></div>
+
+        <div class="status">
+          <span id="count">0 pages</span>
+          <progress id="progress" value="0" max="1" hidden></progress>
+          <span id="status"></span>
+        </div>
+      </section>
+    </main>
+
+    <script src="../../shared/vendor/pdfjs/pdf.min.js"></script>
+    <script src="../../shared/vendor/jszip.min.js"></script>
+    <script src="app.js"></script>
+    <script src="../../shared/shell.js"></script>
+    <script>
+      Shell.mount({ tool: "Pdf2Pic", rootHref: "../../" });
+    </script>
+  </body>
+</html>
