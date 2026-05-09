@@ -79,6 +79,38 @@ body {
 }
 
 /* ----------------------------------------------------------------------------
+ * Tool brand mark — shared SVG logo + name layout used by every tool's hero.
+ * Each tool's logo SVG follows the same shape (red PDF page) so the suite
+ * reads as a family.
+ * -------------------------------------------------------------------------- */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 64px;
+  border-radius: 18px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.badge .logo {
+  width: 56px;
+  height: 62px;
+  display: block;
+}
+
+/* ----------------------------------------------------------------------------
  * Suite chrome — header (top nav) and footer injected by shared/shell.js.
  * Sits outside <main>, full-width, on every page.
  * -------------------------------------------------------------------------- */
