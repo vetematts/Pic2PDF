@@ -32,35 +32,6 @@
   font-size: 0.92rem;
 }
 
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  justify-content: center;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 68px;
-  height: 64px;
-  border-radius: 18px;
-  padding: 0;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  font-size: 0.75rem;
-  letter-spacing: 1px;
-  color: var(--muted);
-}
-
-.badge .logo {
-  width: 56px;
-  height: 62px;
-  display: block;
-}
-
 .panel {
   background: transparent;
   border: 1px solid transparent;
