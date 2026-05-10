@@ -49,7 +49,7 @@
     const brand = el(
       "a",
       { className: "origami-nav-brand", href: rootHref },
-      ["Origami"]
+      ["Origami Docs"]
     );
 
     const items = [brand];
