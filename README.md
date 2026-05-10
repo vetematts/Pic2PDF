@@ -1,4 +1,4 @@
-# Origami
+# Origami Docs
 
 **A suite of fast, private, browser-only file tools. Nothing leaves your device.**
 
