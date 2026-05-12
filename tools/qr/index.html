@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#151515" />
+    <meta
+      name="description"
+      content="Generate styled QR codes in your browser. Rounded modules, custom colors, optional center logo. Nothing leaves your device."
+    />
+    <link rel="manifest" href="../../manifest.json" />
+    <title>QR · Origami Docs</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icons/icon-192.png" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/icons/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="../../shared/styles.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="hero">
+        <div class="brand">
+          <span class="badge" aria-hidden="true">
+            <svg class="logo" viewBox="0 0 64 80" role="img" aria-label="QR">
+              <defs>
+                <linearGradient id="pdfBody" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff3b30" />
+                  <stop offset="1" stop-color="#b31313" />
+                </linearGradient>
+                <linearGradient id="pdfFold" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff8a7e" />
+                  <stop offset="1" stop-color="#e24a3f" />
+                </linearGradient>
+              </defs>
+              <rect x="8" y="6" width="48" height="66" rx="10" fill="url(#pdfBody)" />
+              <path d="M44 6l12 12H44z" fill="url(#pdfFold)" />
+              <!-- finder pattern top-left -->
+              <rect x="16" y="28" width="10" height="10" rx="2" fill="#ffffff" />
+              <rect x="19" y="31" width="4" height="4" rx="0.5" fill="url(#pdfBody)" />
+              <!-- finder pattern top-right -->
+              <rect x="38" y="28" width="10" height="10" rx="2" fill="#ffffff" />
+              <rect x="41" y="31" width="4" height="4" rx="0.5" fill="url(#pdfBody)" />
+              <!-- finder pattern bottom-left -->
+              <rect x="16" y="50" width="10" height="10" rx="2" fill="#ffffff" />
+              <rect x="19" y="53" width="4" height="4" rx="0.5" fill="url(#pdfBody)" />
+              <!-- module dots -->
+              <rect x="30" y="40" width="3" height="3" rx="0.5" fill="#ffffff" />
+              <rect x="35" y="40" width="3" height="3" rx="0.5" fill="#ffffff" />
+              <rect x="40" y="40" width="3" height="3" rx="0.5" fill="#ffffff" opacity="0.7" />
+              <rect x="30" y="45" width="3" height="3" rx="0.5" fill="#ffffff" opacity="0.7" />
+              <rect x="35" y="45" width="3" height="3" rx="0.5" fill="#ffffff" />
+              <rect x="40" y="50" width="3" height="3" rx="0.5" fill="#ffffff" />
+              <rect x="35" y="55" width="3" height="3" rx="0.5" fill="#ffffff" opacity="0.7" />
+              <rect x="40" y="55" width="3" height="3" rx="0.5" fill="#ffffff" />
+            </svg>
+          </span>
+          <h1>QR</h1>
+        </div>
+        <p>Make QR codes that look good. Rounded dots, custom colors, center logo.</p>
+      </header>
+
+      <section class="panel qr-layout">
+        <div class="qr-controls">
+          <div class="field">
+            <label for="dataInput" class="field-tag">Text or URL</label>
+            <textarea
+              id="dataInput"
+              rows="3"
+              placeholder="https://example.com or any text"
+            >https://origami.dev</textarea>
+          </div>
+
+          <div class="field-row">
+            <div class="select">
+              <label for="dotStyle">Dot style</label>
+              <select id="dotStyle">
+                <option value="rounded" selected>Rounded</option>
+                <option value="square">Square</option>
+                <option value="dots">Dots</option>
+                <option value="classy">Classy</option>
+                <option value="classy-rounded">Classy rounded</option>
+                <option value="extra-rounded">Extra rounded</option>
+              </select>
+            </div>
+            <div class="select">
+              <label for="cornerStyle">Corner style</label>
+              <select id="cornerStyle">
+                <option value="extra-rounded" selected>Extra rounded</option>
+                <option value="square">Square</option>
+                <option value="dot">Dot</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="select color">
+              <label for="dotColor">Dot color</label>
+              <input id="dotColor" type="color" value="#171717" />
+            </div>
+            <div class="select color">
+              <label for="bgColor">Background</label>
+              <input id="bgColor" type="color" value="#ffffff" />
+            </div>
+            <button id="bgTransparent" class="ghost small" type="button" title="Transparent background">
+              Transparent
+            </button>
+          </div>
+
+          <div class="field-row">
+            <div class="select">
+              <label for="errorLevel">Error correction</label>
+              <select id="errorLevel">
+                <option value="L">Low (7%)</option>
+                <option value="M" selected>Medium (15%)</option>
+                <option value="Q">Quartile (25%)</option>
+                <option value="H">High (30%)</option>
+              </select>
+            </div>
+            <div class="select range">
+              <label for="marginInput">Quiet zone <span id="marginValue">10</span></label>
+              <input id="marginInput" type="range" min="0" max="40" step="2" value="10" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-tag">Center logo (optional)</label>
+            <div class="logo-row">
+              <label class="file-btn-small">
+                <input id="logoInput" type="file" accept="image/*" />
+                Upload
+              </label>
+              <button id="removeLogo" class="ghost small" type="button" disabled>Remove</button>
+              <div class="select range">
+                <label for="logoSize">Size <span id="logoSizeValue">0.30</span></label>
+                <input id="logoSize" type="range" min="0.1" max="0.5" step="0.02" value="0.3" />
+              </div>
+            </div>
+            <p class="hint">Adding a logo auto-bumps error correction to High so the code still scans.</p>
+          </div>
+        </div>
+
+        <div class="qr-preview">
+          <div id="preview" class="qr-preview-mount" aria-live="polite"></div>
+
+          <div class="qr-export">
+            <div class="field-row">
+              <div class="select range">
+                <label for="sizeInput">Export size <span id="sizeValue">512</span> px</label>
+                <input id="sizeInput" type="range" min="128" max="2048" step="32" value="512" />
+              </div>
+            </div>
+            <div class="field-row">
+              <label for="fileNameInput" class="field-tag">Filename</label>
+              <input id="fileNameInput" class="name-input" type="text" placeholder="qrcode" />
+            </div>
+            <div class="qr-export-buttons">
+              <button id="downloadPng" class="primary" type="button">PNG</button>
+              <button id="downloadSvg" type="button">SVG</button>
+              <button id="downloadJpg" type="button">JPG</button>
+            </div>
+            <div class="status">
+              <span id="status"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="../../shared/vendor/qr-code-styling.js"></script>
+    <script src="app.js"></script>
+    <script src="../../shared/shell.js"></script>
+    <script>
+      Shell.mount({ tool: "QR", rootHref: "../../" });
+    </script>
+  </body>
+</html>

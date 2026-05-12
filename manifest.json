@@ -67,6 +67,19 @@
           "type": "image/png"
         }
       ]
+    },
+    {
+      "name": "QR",
+      "short_name": "QR",
+      "description": "Make styled QR codes",
+      "url": "./tools/qr/",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }

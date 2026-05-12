@@ -1,0 +1,297 @@
+/* QR — tool-specific layout. Shared theme lives in /shared/styles.css. */
+
+.wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.hero p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+}
+
+.qr-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 760px) {
+  .qr-layout {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+  }
+}
+
+.qr-controls {
+  display: grid;
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.field-tag {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+textarea#dataInput {
+  width: 100%;
+  background: var(--soft);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  min-height: 60px;
+}
+
+textarea#dataInput:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.select {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  min-width: 140px;
+}
+
+.select label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.select select,
+.select input[type="range"] {
+  background: var(--soft);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.select.range input[type="range"] {
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.select.color {
+  min-width: 110px;
+}
+
+.select.color input[type="color"] {
+  width: 100%;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--soft);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.name-input {
+  flex: 1;
+  min-width: 160px;
+  background: var(--soft);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.name-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+button {
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--soft);
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    border-color 120ms ease,
+    background 120ms ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button.primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+  font-weight: 600;
+}
+
+button.primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+button.ghost {
+  background: transparent;
+}
+
+button.small {
+  padding: 6px 10px;
+  font-size: 0.82rem;
+}
+
+button.ghost.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+.file-btn-small {
+  display: inline-block;
+  background: var(--soft);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 120ms ease;
+}
+
+.file-btn-small:hover {
+  border-color: var(--accent);
+}
+
+.file-btn-small input {
+  display: none;
+}
+
+.logo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.hint {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  opacity: 0.85;
+}
+
+/* Preview + export */
+
+.qr-preview {
+  display: grid;
+  gap: 14px;
+}
+
+.qr-preview-mount {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 8px;
+  /* Checkered pattern shows through any transparency in the QR background */
+  background-image:
+    linear-gradient(45deg, var(--border) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--border) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--border) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--border) 75%);
+  background-size: 20px 20px;
+  background-position:
+    0 0,
+    0 10px,
+    10px -10px,
+    -10px 0;
+}
+
+.qr-preview-mount canvas,
+.qr-preview-mount svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.qr-export {
+  display: grid;
+  gap: 10px;
+}
+
+.qr-export-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.qr-export-buttons button {
+  flex: 1;
+  min-width: 70px;
+}
+
+.status {
+  font-size: 0.82rem;
+  color: var(--muted);
+  min-height: 1.2em;
+}
