@@ -80,6 +80,19 @@
           "type": "image/png"
         }
       ]
+    },
+    {
+      "name": "Convert Image",
+      "short_name": "Convert",
+      "description": "HEIC, JPG, PNG, WebP conversion",
+      "url": "./tools/convert-image/",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }

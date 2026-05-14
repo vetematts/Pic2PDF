@@ -1,4 +1,4 @@
-const CACHE = "origami-v9";
+const CACHE = "origami-v10";
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -11,6 +11,7 @@ self.addEventListener("install", (e) => {
         "./shared/vendor/pdf-lib.min.js",
         "./shared/vendor/jszip.min.js",
         "./shared/vendor/qr-code-styling.js",
+        "./shared/vendor/heic2any.min.js",
         "./shared/vendor/pdfjs/pdf.min.js",
         "./shared/vendor/pdfjs/pdf.worker.min.js",
         "./tools/pic2pdf/",
@@ -33,6 +34,10 @@ self.addEventListener("install", (e) => {
         "./tools/qr/index.html",
         "./tools/qr/styles.css",
         "./tools/qr/app.js",
+        "./tools/convert-image/",
+        "./tools/convert-image/index.html",
+        "./tools/convert-image/styles.css",
+        "./tools/convert-image/app.js",
       ])
     )
   );
