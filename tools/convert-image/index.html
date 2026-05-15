@@ -6,10 +6,10 @@
     <meta name="theme-color" content="#151515" />
     <meta
       name="description"
-      content="Extract pages from a PDF as PNG, JPG, or WebP images. All in your browser. Nothing leaves your device."
+      content="Convert HEIC, JPG, PNG, or WebP images to any other image format. All in your browser. Nothing leaves your device."
     />
     <link rel="manifest" href="../../manifest.json" />
-    <title>Pdf2Pic · Origami Docs</title>
+    <title>Convert Image · Origami Docs</title>
     <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icons/icon-192.png" />
@@ -28,7 +28,7 @@
       <header class="hero">
         <div class="brand">
           <span class="badge" aria-hidden="true">
-            <svg class="logo" viewBox="0 0 64 80" role="img" aria-label="P2I">
+            <svg class="logo" viewBox="0 0 64 80" role="img" aria-label="CNV">
               <defs>
                 <linearGradient id="pdfBody" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0" stop-color="#ff3b30" />
@@ -41,84 +41,100 @@
               </defs>
               <rect x="8" y="6" width="48" height="66" rx="10" fill="url(#pdfBody)" />
               <path d="M44 6l12 12H44z" fill="url(#pdfFold)" />
-              <rect x="16" y="32" width="13" height="10" rx="2" fill="#ffffff" opacity="0.95" />
-              <rect x="33" y="32" width="13" height="10" rx="2" fill="#ffffff" opacity="0.7" />
-              <rect x="16" y="46" width="13" height="10" rx="2" fill="#ffffff" opacity="0.7" />
-              <rect x="33" y="46" width="13" height="10" rx="2" fill="#ffffff" opacity="0.95" />
+              <!-- source rect -->
+              <rect x="14" y="32" width="14" height="16" rx="2" fill="#ffffff" />
+              <!-- arrow between -->
+              <path
+                d="M30 40h6m-3-3l3 3-3 3"
+                stroke="#ffffff"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                fill="none"
+              />
+              <!-- target rect (translucent) -->
+              <rect x="38" y="32" width="14" height="16" rx="2" fill="#ffffff" opacity="0.6" />
               <text
                 x="32"
-                y="68"
+                y="66"
                 text-anchor="middle"
-                font-size="13"
+                font-size="12"
                 font-family="Outfit, system-ui, sans-serif"
                 font-weight="800"
                 fill="#ffffff"
               >
-                P2I
+                CNV
               </text>
             </svg>
           </span>
-          <h1>Pdf2Pic</h1>
+          <h1>Convert Image</h1>
         </div>
-        <p>Extract PDF pages as images. Nothing leaves your device.</p>
+        <p>HEIC → JPG and everything in between. Nothing leaves your device.</p>
       </header>
 
       <section class="panel">
         <div id="dropZone" class="drop">
           <label class="file-btn">
-            <input id="fileInput" type="file" accept="application/pdf,.pdf" multiple />
-            Add PDFs
+            <input
+              id="fileInput"
+              type="file"
+              accept="image/*,.heic,.heif"
+              multiple
+            />
+            Add images
           </label>
-          <p id="emptyState" class="empty-state">Drop PDFs or tap to choose</p>
-          <p class="hint">Click × to skip a page · ⌘E to export</p>
+          <p id="emptyState" class="empty-state">Drop images or tap to choose</p>
+          <p class="hint">HEIC · JPG · PNG · WebP · click × to skip · ⌘E to export</p>
         </div>
 
         <div class="controls">
           <div class="select inline">
-            <label for="formatSelect">Format</label>
+            <label for="formatSelect">Output format</label>
             <select id="formatSelect">
-              <option value="png" selected>PNG</option>
-              <option value="jpeg">JPG</option>
+              <option value="jpeg" selected>JPG</option>
+              <option value="png">PNG</option>
               <option value="webp">WebP</option>
-            </select>
-          </div>
-          <div class="select inline">
-            <label for="scaleSelect">Scale</label>
-            <select id="scaleSelect">
-              <option value="1">1× (screen)</option>
-              <option value="2" selected>2×</option>
-              <option value="3">3× (high DPI)</option>
             </select>
           </div>
           <div class="select range" id="qualityWrap">
             <label for="qualityRange">Quality <span id="qualityValue">0.92</span></label>
-            <input id="qualityRange" type="range" min="0.5" max="1" step="0.02" value="0.92" />
+            <input id="qualityRange" type="range" min="0.3" max="1" step="0.02" value="0.92" />
+          </div>
+          <div class="select inline">
+            <label for="maxDimSelect">Max dimension</label>
+            <select id="maxDimSelect">
+              <option value="0" selected>Original size</option>
+              <option value="3000">3000 px</option>
+              <option value="2000">2000 px</option>
+              <option value="1500">1500 px</option>
+              <option value="1000">1000 px</option>
+            </select>
           </div>
         </div>
 
         <div class="controls">
           <label for="fileNameInput" class="field-tag">Filename</label>
-          <input id="fileNameInput" class="name-input" type="text" placeholder="pdf2pic.zip" />
+          <input id="fileNameInput" class="name-input" type="text" placeholder="converted.zip" />
           <button id="exportBtn" class="primary" disabled>Export</button>
           <button id="clearBtn" class="ghost" disabled>Clear</button>
         </div>
 
-        <div id="pages" class="pages" aria-live="polite"></div>
+        <div id="items" class="items" aria-live="polite"></div>
 
         <div class="status">
-          <span id="count">0 pages</span>
+          <span id="count">0 images</span>
           <progress id="progress" value="0" max="1" hidden></progress>
           <span id="status"></span>
         </div>
       </section>
     </main>
 
-    <script src="../../shared/vendor/pdfjs/pdf.min.js"></script>
     <script src="../../shared/vendor/jszip.min.js"></script>
+    <script src="../../shared/vendor/heic2any.min.js"></script>
     <script src="app.js"></script>
     <script src="../../shared/shell.js"></script>
     <script>
-      Shell.mount({ tool: "Pdf2Pic", rootHref: "../../" });
+      Shell.mount({ tool: "Convert Image", rootHref: "../../" });
     </script>
   </body>
 </html>
