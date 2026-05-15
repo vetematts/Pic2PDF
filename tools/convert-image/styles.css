@@ -1,198 +1,23 @@
-/* Convert Image — tool-specific layout. Shared theme lives in /shared/styles.css. */
+/* Convert Image — tool-specific layout only */
 
 .wrap {
   max-width: 920px;
-  margin: 0 auto;
-  padding: 24px 16px 40px;
 }
-
-.hero {
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-.hero h1 {
-  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
-  font-weight: 700;
-  margin: 0;
-  letter-spacing: -0.02em;
-}
-
-.hero p {
-  margin: 6px 0 0;
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 20px;
-  display: grid;
-  gap: 16px;
-}
-
-.drop {
-  border: 1.5px dashed var(--border);
-  border-radius: 14px;
-  padding: 28px 16px;
-  text-align: center;
-  transition:
-    border-color 120ms ease,
-    background 120ms ease;
-}
-
-.drop.dragover {
-  border-color: var(--accent);
-  background: var(--soft);
-}
-
-.file-btn {
-  display: inline-block;
-  background: var(--accent);
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 120ms ease;
-}
-
-.file-btn:hover {
-  background: var(--accent-hover);
-}
-
-.file-btn input {
-  display: none;
-}
-
-.empty-state {
-  margin: 12px 0 4px;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-.hint {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.78rem;
-  opacity: 0.8;
-}
-
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-}
-
-.field-tag {
-  font-size: 0.72rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.select {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-
-.select select,
-.select input[type="range"] {
-  background: var(--soft);
-  color: var(--ink);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 6px 10px;
-  font-family: inherit;
-  font-size: 0.9rem;
-}
-
-.select.range input[type="range"] {
-  padding: 0;
-  width: 110px;
-  background: transparent;
-  border: none;
-}
-
-.name-input {
-  flex: 1;
-  min-width: 160px;
-  background: var(--soft);
-  color: var(--ink);
-  border: 1px solid var(--border);
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  font-family: inherit;
-}
-
-.name-input:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-button {
-  font-family: inherit;
-  font-size: 0.95rem;
-  padding: 8px 16px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--soft);
-  color: var(--ink);
-  cursor: pointer;
-  transition:
-    transform 120ms ease,
-    border-color 120ms ease,
-    background 120ms ease;
-}
-
-button:hover:not(:disabled) {
-  transform: translateY(-1px);
-  border-color: var(--accent);
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-button.primary {
-  background: var(--accent);
-  color: #fff;
-  border-color: transparent;
-  font-weight: 600;
-}
-
-button.primary:hover:not(:disabled) {
-  background: var(--accent-hover);
-}
-
-button.ghost {
-  background: transparent;
-}
-
-/* Image list (rows, same shape as Compress Image) */
 
 .items {
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
 .item-tile {
   display: grid;
   grid-template-columns: 56px 1fr auto;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
   padding: 8px;
-  background: var(--soft);
   border: 1px solid var(--border);
   border-radius: 10px;
+  background: var(--panel);
 }
 
 .item-thumb {
@@ -200,6 +25,7 @@ button.ghost {
   height: 56px;
   object-fit: cover;
   border-radius: 8px;
+  border: 1px solid var(--border);
   background: #fff;
   display: block;
 }
@@ -209,7 +35,7 @@ button.ghost {
 }
 
 .item-name {
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -222,31 +48,11 @@ button.ghost {
 }
 
 .item-remove {
+  border-color: #4a2b2b;
+  color: #ff8a7a;
   background: transparent;
-  border: none;
-  color: var(--muted);
-  font-size: 1.3rem;
-  padding: 4px 10px;
-  cursor: pointer;
-  line-height: 1;
 }
 
-.item-remove:hover {
-  color: var(--accent);
+.item-remove:hover:not(:disabled) {
   transform: none;
-}
-
-.status {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
-  font-size: 0.85rem;
-  color: var(--muted);
-  padding-top: 4px;
-}
-
-.status progress {
-  width: 120px;
-  height: 6px;
 }
