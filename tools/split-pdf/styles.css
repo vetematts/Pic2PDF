@@ -1,0 +1,67 @@
+/* Split PDF — tool-specific layout only */
+
+.wrap {
+  max-width: 920px;
+}
+
+.pages {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.page-tile {
+  position: relative;
+  aspect-ratio: 1 / 1.41;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  overflow: hidden;
+}
+
+.page-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: #fff;
+  pointer-events: none;
+}
+
+.page-num {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Group badge — shows which output file each page lands in */
+.page-group {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  right: 6px;
+  text-align: center;
+  background: rgba(74, 165, 255, 0.85);
+  color: #0c0c0c;
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.page-tile.excluded {
+  opacity: 0.35;
+}
+
+.page-tile.excluded .page-group {
+  display: none;
+}
