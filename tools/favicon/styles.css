@@ -1,0 +1,71 @@
+/* Favicon Generator — tool-specific layout only */
+
+.wrap {
+  max-width: 760px;
+}
+
+.preview-wrap {
+  display: grid;
+  gap: 12px;
+}
+
+.preview-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: flex-end;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+}
+
+.preview-cell {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+}
+
+.preview-img {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background:
+    linear-gradient(45deg, var(--border) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--border) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--border) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--border) 75%);
+  background-size: 12px 12px;
+  background-position: 0 0, 0 6px, 6px -6px, -6px 0;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.preview-cap {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.snippet {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+  padding: 10px 12px;
+}
+
+.snippet summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.snippet pre {
+  margin: 10px 0 8px;
+  padding: 10px;
+  background: var(--soft);
+  border-radius: 8px;
+  font-size: 0.78rem;
+  overflow-x: auto;
+  color: var(--ink);
+}
