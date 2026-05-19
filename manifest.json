@@ -106,6 +106,19 @@
           "type": "image/png"
         }
       ]
+    },
+    {
+      "name": "Favicon Generator",
+      "short_name": "Favicon",
+      "description": "One image to a full favicon set",
+      "url": "./tools/favicon/",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#151515" />
+    <meta
+      name="description"
+      content="Turn one image into a full favicon set — ICO, PNGs, apple-touch-icon, and the HTML snippet. All in your browser. Nothing leaves your device."
+    />
+    <link rel="manifest" href="../../manifest.json" />
+    <title>Favicon Generator · Origami Docs</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icons/icon-192.png" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/icons/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="../../shared/styles.css" />
+    <link rel="stylesheet" href="../../shared/tool-ui.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="hero">
+        <div class="brand">
+          <span class="badge" aria-hidden="true">
+            <svg class="logo" viewBox="0 0 64 80" role="img" aria-label="FAV">
+              <defs>
+                <linearGradient id="pdfBody" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff3b30" />
+                  <stop offset="1" stop-color="#b31313" />
+                </linearGradient>
+                <linearGradient id="pdfFold" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff8a7e" />
+                  <stop offset="1" stop-color="#e24a3f" />
+                </linearGradient>
+              </defs>
+              <rect x="8" y="6" width="48" height="66" rx="10" fill="url(#pdfBody)" />
+              <path d="M44 6l12 12H44z" fill="url(#pdfFold)" />
+              <path
+                d="M32 30l3.2 6.5 7.2 1-5.2 5 1.2 7.1L32 46.2l-6.4 3.4 1.2-7.1-5.2-5 7.2-1z"
+                fill="#ffffff"
+                opacity="0.95"
+              />
+              <text
+                x="32"
+                y="68"
+                text-anchor="middle"
+                font-size="12"
+                font-family="Outfit, system-ui, sans-serif"
+                font-weight="800"
+                fill="#ffffff"
+              >
+                FAV
+              </text>
+            </svg>
+          </span>
+          <h1>Favicon Generator</h1>
+        </div>
+        <p>One image → a full favicon set. Nothing leaves your device.</p>
+      </header>
+
+      <section class="panel">
+        <div id="dropZone" class="drop">
+          <label class="file-btn">
+            <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" />
+            Choose an image
+          </label>
+          <p id="emptyState" class="empty-state">Drop a square image or tap to choose</p>
+          <p class="hint">PNG · JPG · WebP · SVG · use a square source for best results · <kbd>⌘E</kbd> to export</p>
+        </div>
+
+        <div class="controls controls-bar">
+          <div class="select inline">
+            <label for="bgSelect">Background</label>
+            <select id="bgSelect">
+              <option value="transparent" selected>Transparent</option>
+              <option value="color">Solid color</option>
+            </select>
+          </div>
+          <div class="select color" id="bgColorWrap" hidden>
+            <label for="bgColor">Color</label>
+            <input id="bgColor" type="color" value="#ffffff" />
+          </div>
+          <div class="select inline">
+            <label for="paddingRange">Padding <span id="paddingValue">0</span>%</label>
+            <input id="paddingRange" type="range" min="0" max="30" step="2" value="0" />
+          </div>
+        </div>
+
+        <div class="controls controls-bar">
+          <label for="fileNameInput" class="field-tag">Filename</label>
+          <input id="fileNameInput" class="name-input" type="text" placeholder="favicons.zip" />
+          <button id="exportBtn" class="primary" disabled>Generate set</button>
+          <button id="clearBtn" class="ghost" disabled>Clear</button>
+        </div>
+
+        <div id="previewWrap" class="preview-wrap" hidden>
+          <div class="preview-grid" id="previewGrid"></div>
+          <details class="snippet">
+            <summary>HTML snippet</summary>
+            <pre id="snippet"></pre>
+            <button id="copySnippet" class="ghost small" type="button">Copy</button>
+          </details>
+        </div>
+
+        <div class="status">
+          <div class="status-left">
+            <span id="count">No image loaded</span>
+            <progress id="progress" value="0" max="1" hidden></progress>
+          </div>
+          <div class="status-right">
+            <span id="status"></span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="../../shared/vendor/jszip.min.js"></script>
+    <script src="app.js"></script>
+    <script src="../../shared/shell.js"></script>
+    <script>
+      Shell.mount({ tool: "Favicon Generator", rootHref: "../../" });
+    </script>
+  </body>
+</html>
