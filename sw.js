@@ -1,4 +1,4 @@
-const CACHE = "origami-v11";
+const CACHE = "origami-v12";
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -43,6 +43,10 @@ self.addEventListener("install", (e) => {
         "./tools/split-pdf/index.html",
         "./tools/split-pdf/styles.css",
         "./tools/split-pdf/app.js",
+        "./tools/favicon/",
+        "./tools/favicon/index.html",
+        "./tools/favicon/styles.css",
+        "./tools/favicon/app.js",
       ])
     )
   );
