@@ -1,4 +1,4 @@
-const CACHE = "origami-v12";
+const CACHE = "origami-v13";
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -47,6 +47,10 @@ self.addEventListener("install", (e) => {
         "./tools/favicon/index.html",
         "./tools/favicon/styles.css",
         "./tools/favicon/app.js",
+        "./tools/crop-image/",
+        "./tools/crop-image/index.html",
+        "./tools/crop-image/styles.css",
+        "./tools/crop-image/app.js",
       ])
     )
   );
