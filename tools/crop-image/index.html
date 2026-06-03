@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#151515" />
+    <meta
+      name="description"
+      content="Crop an image in your browser with a draggable selection and aspect-ratio presets. Nothing leaves your device."
+    />
+    <link rel="manifest" href="../../manifest.json" />
+    <title>Crop Image · Origami Docs</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icons/icon-192.png" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/icons/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="../../shared/styles.css" />
+    <link rel="stylesheet" href="../../shared/tool-ui.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="hero">
+        <div class="brand">
+          <span class="badge" aria-hidden="true">
+            <svg class="logo" viewBox="0 0 64 80" role="img" aria-label="CRP">
+              <defs>
+                <linearGradient id="pdfBody" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff3b30" />
+                  <stop offset="1" stop-color="#b31313" />
+                </linearGradient>
+                <linearGradient id="pdfFold" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff8a7e" />
+                  <stop offset="1" stop-color="#e24a3f" />
+                </linearGradient>
+              </defs>
+              <rect x="8" y="6" width="48" height="66" rx="10" fill="url(#pdfBody)" />
+              <path d="M44 6l12 12H44z" fill="url(#pdfFold)" />
+              <!-- crop corner brackets -->
+              <path
+                d="M22 30v-4h4M42 30v-4h-4M22 50v4h4M42 50v4h-4"
+                stroke="#ffffff"
+                stroke-width="2.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                fill="none"
+                opacity="0.95"
+              />
+              <rect
+                x="26"
+                y="32"
+                width="12"
+                height="14"
+                rx="1"
+                fill="#ffffff"
+                opacity="0.45"
+              />
+              <text
+                x="32"
+                y="68"
+                text-anchor="middle"
+                font-size="12"
+                font-family="Outfit, system-ui, sans-serif"
+                font-weight="800"
+                fill="#ffffff"
+              >
+                CRP
+              </text>
+            </svg>
+          </span>
+          <h1>Crop Image</h1>
+        </div>
+        <p>Drag to select, crop, done. Nothing leaves your device.</p>
+      </header>
+
+      <section class="panel">
+        <div id="dropZone" class="drop">
+          <label class="file-btn">
+            <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" />
+            Choose an image
+          </label>
+          <p id="emptyState" class="empty-state">Drop an image or tap to choose</p>
+          <p class="hint">Drag the box · drag handles to resize · <kbd>⌘E</kbd> to export</p>
+        </div>
+
+        <div class="controls controls-bar">
+          <div class="select inline">
+            <label for="ratioSelect">Aspect ratio</label>
+            <select id="ratioSelect">
+              <option value="free" selected>Free</option>
+              <option value="1:1">Square 1:1</option>
+              <option value="4:3">4:3</option>
+              <option value="3:2">3:2</option>
+              <option value="16:9">16:9</option>
+              <option value="2:3">2:3 (portrait)</option>
+              <option value="9:16">9:16 (story)</option>
+            </select>
+          </div>
+          <div class="select inline">
+            <label for="formatSelect">Format</label>
+            <select id="formatSelect">
+              <option value="auto" selected>Keep original</option>
+              <option value="jpeg">JPG</option>
+              <option value="png">PNG</option>
+              <option value="webp">WebP</option>
+            </select>
+          </div>
+          <div class="select range" id="qualityWrap">
+            <label for="qualityRange">Quality <span id="qualityValue">0.92</span></label>
+            <input id="qualityRange" type="range" min="0.3" max="1" step="0.02" value="0.92" />
+          </div>
+        </div>
+
+        <div class="controls controls-bar">
+          <label for="fileNameInput" class="field-tag">Filename</label>
+          <input id="fileNameInput" class="name-input" type="text" placeholder="cropped" />
+          <button id="resetBtn" class="ghost" disabled>Reset</button>
+          <button id="exportBtn" class="primary" disabled>Export</button>
+          <button id="clearBtn" class="ghost" disabled>Clear</button>
+        </div>
+
+        <div id="stage" class="crop-stage" hidden>
+          <img id="cropImg" class="crop-img" alt="Image to crop" />
+          <div id="cropBox" class="crop-box">
+            <span class="handle n"></span>
+            <span class="handle s"></span>
+            <span class="handle e"></span>
+            <span class="handle w"></span>
+            <span class="handle ne"></span>
+            <span class="handle nw"></span>
+            <span class="handle se"></span>
+            <span class="handle sw"></span>
+          </div>
+        </div>
+
+        <div class="status">
+          <div class="status-left">
+            <span id="count">No image loaded</span>
+          </div>
+          <div class="status-right">
+            <span id="status"></span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+    <script src="../../shared/shell.js"></script>
+    <script>
+      Shell.mount({ tool: "Crop Image", rootHref: "../../" });
+    </script>
+  </body>
+</html>

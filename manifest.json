@@ -119,6 +119,19 @@
           "type": "image/png"
         }
       ]
+    },
+    {
+      "name": "Crop Image",
+      "short_name": "Crop",
+      "description": "Crop an image with aspect presets",
+      "url": "./tools/crop-image/",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
