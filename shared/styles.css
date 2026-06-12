@@ -9,8 +9,8 @@
   --bg: #171717;
   --ink: #f5f6f7;
   --muted: #b1b1b1;
-  --accent: #4aa5ff;
-  --accent-hover: #6bb8ff;
+  --accent: #9FB3EC;
+  --accent-hover: #B8C9F3;
   --panel: #202020;
   --border: #343434;
   --soft: #2a2a2a;
@@ -25,8 +25,8 @@
     --bg: #f8f9fa;
     --ink: #1a1a1a;
     --muted: #5c5c5c;
-    --accent: #2563eb;
-    --accent-hover: #3b82f6;
+    --accent: #5B78D4;
+    --accent-hover: #7290E0;
     --panel: #ffffff;
     --border: #e5e7eb;
     --soft: #f1f3f4;
@@ -52,7 +52,7 @@ body {
   line-height: 1.5;
   background:
     radial-gradient(ellipse 120% 80% at 20% 20%, rgba(42, 42, 42, 0.9) 0%, transparent 50%),
-    radial-gradient(ellipse 80% 60% at 90% 0%, rgba(74, 165, 255, 0.12), transparent 45%),
+    radial-gradient(ellipse 80% 60% at 90% 0%, rgba(159, 179, 236, 0.12), transparent 45%),
     radial-gradient(ellipse 60% 80% at 0% 90%, rgba(255, 70, 70, 0.08), transparent 50%);
   background-color: var(--bg);
   min-height: 100vh;
@@ -63,7 +63,7 @@ body {
   body {
     background:
       radial-gradient(ellipse 100% 70% at 30% 10%, rgba(255, 255, 255, 0.9) 0%, transparent 50%),
-      radial-gradient(ellipse 70% 50% at 95% 5%, rgba(37, 99, 235, 0.08), transparent 45%);
+      radial-gradient(ellipse 70% 50% at 95% 5%, rgba(91, 120, 212, 0.08), transparent 45%);
     background-color: var(--bg);
   }
 }
