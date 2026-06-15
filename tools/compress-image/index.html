@@ -34,25 +34,20 @@
                   <stop offset="0" stop-color="#7B9EE8" />
                   <stop offset="1" stop-color="#4A6BC4" />
                 </linearGradient>
-                <linearGradient id="pdfFold" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#B0C5F5" />
-                  <stop offset="1" stop-color="#7B9EE8" />
-                </linearGradient>
-                <clipPath id="photoClip"><rect x="13" y="17" width="38" height="26" rx="2" /></clipPath>
+                <clipPath id="ic"><rect x="4" y="4" width="56" height="56" rx="16" /></clipPath>
               </defs>
-              <rect x="8" y="6" width="48" height="66" rx="10" fill="url(#pdfBody)" />
-              <path d="M44 6l12 12H44z" fill="url(#pdfFold)" />
-              <!-- photo frame -->
-              <rect x="13" y="17" width="38" height="26" rx="2" fill="#ffffff" opacity="0.15" />
-              <circle cx="18" cy="23" r="4" fill="#ffffff" opacity="0.9" clip-path="url(#photoClip)" />
-              <path d="M10 43 L22 28 L29 36 L36 26 L54 43 Z" fill="#ffffff" opacity="0.8" clip-path="url(#photoClip)" />
-              <rect x="13" y="17" width="38" height="26" rx="2" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.9" />
-              <!-- compress arrows pointing inward -->
-              <path d="M13 54 L27 54" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.75" />
-              <path d="M23 50 L27 54 L23 58" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.95" />
-              <path d="M51 54 L37 54" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.75" />
-              <path d="M41 50 L37 54 L41 58" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.95" />
-              <text x="32" y="69" text-anchor="middle" font-size="11" font-family="Outfit, system-ui, sans-serif" font-weight="800" fill="#ffffff">CMP</text>
+              <!-- Square squircle — not a document page -->
+              <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#pdfBody)" />
+              <!-- Sun -->
+              <circle cx="15" cy="17" r="7" fill="#ffffff" opacity="0.9" clip-path="url(#ic)" />
+              <!-- Mountain landscape fills square -->
+              <path d="M0 60 L18 34 L28 46 L40 28 L70 60 Z" fill="#ffffff" opacity="0.75" clip-path="url(#ic)" />
+              <!-- Compress: arrows pointing inward toward each other -->
+              <path d="M8 66 L26 66" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.75" />
+              <path d="M22 62 L26 66 L22 70" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              <path d="M56 66 L38 66" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.75" />
+              <path d="M42 62 L38 66 L42 70" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              <text x="32" y="78" text-anchor="middle" font-size="11" font-family="Outfit, system-ui, sans-serif" font-weight="800" fill="#ffffff">CMP</text>
             </svg>
           </span>
           <h1>Compress Image</h1>
