@@ -54,7 +54,7 @@
 
       .tool-card {
         display: block;
-        padding: 24px;
+        padding: 20px 24px 20px;
         background: var(--panel);
         border: 1px solid var(--border);
         border-radius: 16px;
@@ -77,26 +77,61 @@
         box-shadow: var(--focus-ring);
       }
 
-      .tool-card h2 {
-        margin: 0 0 6px;
-        font-size: 1.15rem;
+      .card-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+
+      .card-icon {
+        flex-shrink: 0;
+        height: 40px;
+        width: auto;
+      }
+
+      .card-top h2 {
+        margin: 0;
+        font-size: 1.1rem;
         font-weight: 600;
       }
 
       .tool-card p {
-        margin: 0 0 12px;
+        margin: 0 0 10px;
         color: var(--muted);
-        font-size: 0.95rem;
+        font-size: 0.9rem;
       }
 
       .tool-meta {
         display: inline-block;
         font-size: 0.75rem;
+        font-weight: 600;
         color: var(--muted);
         background: var(--soft);
         padding: 3px 8px;
         border-radius: 999px;
         letter-spacing: 0.02em;
+      }
+
+      .tool-meta.cat-pdf {
+        color: #ff6b5e;
+        background: rgba(255, 59, 48, 0.12);
+      }
+
+      .tool-meta.cat-image {
+        color: var(--accent);
+        background: rgba(159, 179, 236, 0.14);
+      }
+
+      .tool-meta.cat-utility {
+        color: #5dbd8a;
+        background: rgba(93, 189, 138, 0.12);
+      }
+
+      @media (prefers-color-scheme: light) {
+        .tool-meta.cat-pdf   { color: #c0251d; background: rgba(192, 37, 29, 0.08); }
+        .tool-meta.cat-image { color: var(--accent); background: rgba(91, 120, 212, 0.1); }
+        .tool-meta.cat-utility { color: #2d7a56; background: rgba(45, 122, 86, 0.08); }
       }
 
       .tool-card.placeholder {
@@ -119,66 +154,217 @@
       </header>
 
       <section class="tools" aria-label="Available tools">
+
         <a class="tool-card" href="tools/pic2pdf/">
-          <h2>Pic2PDF</h2>
+          <div class="card-top">
+            <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
+              <defs>
+                <linearGradient id="ic-p2p" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff3b30"/><stop offset="1" stop-color="#b31313"/>
+                </linearGradient>
+                <linearGradient id="ic-p2p-f" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff8a7e"/><stop offset="1" stop-color="#e24a3f"/>
+                </linearGradient>
+              </defs>
+              <rect x="8" y="6" width="48" height="66" rx="10" fill="url(#ic-p2p)"/>
+              <path d="M44 6l12 12H44z" fill="url(#ic-p2p-f)"/>
+              <path d="M16 38h32M16 50h32" stroke="#fff" stroke-width="4.5" stroke-linecap="round" opacity="0.95"/>
+            </svg>
+            <h2>Pic2PDF</h2>
+          </div>
           <p>Combine JPG, PNG, or WebP images into a single PDF.</p>
-          <span class="tool-meta">PDF · Images</span>
+          <span class="tool-meta cat-pdf">PDF · Images</span>
         </a>
 
         <a class="tool-card" href="tools/merge-pdf/">
-          <h2>Merge PDF</h2>
+          <div class="card-top">
+            <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
+              <defs>
+                <linearGradient id="ic-mrg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff3b30"/><stop offset="1" stop-color="#b31313"/>
+                </linearGradient>
+                <linearGradient id="ic-mrg-f" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff8a7e"/><stop offset="1" stop-color="#e24a3f"/>
+                </linearGradient>
+              </defs>
+              <rect x="8" y="6" width="48" height="66" rx="10" fill="url(#ic-mrg)"/>
+              <path d="M44 6l12 12H44z" fill="url(#ic-mrg-f)"/>
+              <path d="M16 34h32M16 44h32M16 54h32" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity="0.95"/>
+            </svg>
+            <h2>Merge PDF</h2>
+          </div>
           <p>Combine PDFs and rearrange pages — drag any page anywhere, drop unwanted ones.</p>
-          <span class="tool-meta">PDF</span>
+          <span class="tool-meta cat-pdf">PDF</span>
         </a>
 
         <a class="tool-card" href="tools/pdf2pic/">
-          <h2>Pdf2Pic</h2>
+          <div class="card-top">
+            <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
+              <defs>
+                <linearGradient id="ic-p2i" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff3b30"/><stop offset="1" stop-color="#b31313"/>
+                </linearGradient>
+                <linearGradient id="ic-p2i-f" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff8a7e"/><stop offset="1" stop-color="#e24a3f"/>
+                </linearGradient>
+              </defs>
+              <rect x="8" y="6" width="48" height="66" rx="10" fill="url(#ic-p2i)"/>
+              <path d="M44 6l12 12H44z" fill="url(#ic-p2i-f)"/>
+              <rect x="16" y="32" width="13" height="10" rx="2" fill="#fff" opacity="0.95"/>
+              <rect x="33" y="32" width="13" height="10" rx="2" fill="#fff" opacity="0.7"/>
+              <rect x="16" y="46" width="13" height="10" rx="2" fill="#fff" opacity="0.7"/>
+              <rect x="33" y="46" width="13" height="10" rx="2" fill="#fff" opacity="0.95"/>
+            </svg>
+            <h2>Pdf2Pic</h2>
+          </div>
           <p>Extract PDF pages as PNG, JPG, or WebP images. Single page or zip of all.</p>
-          <span class="tool-meta">PDF · Images</span>
-        </a>
-
-        <a class="tool-card" href="tools/compress-image/">
-          <h2>Compress Image</h2>
-          <p>Shrink JPG, PNG, or WebP files. Adjust quality and max dimensions.</p>
-          <span class="tool-meta">Images</span>
-        </a>
-
-        <a class="tool-card" href="tools/qr/">
-          <h2>QR</h2>
-          <p>Make modern styled QR codes — rounded dots, custom colors, optional center logo.</p>
-          <span class="tool-meta">QR</span>
-        </a>
-
-        <a class="tool-card" href="tools/convert-image/">
-          <h2>Convert Image</h2>
-          <p>HEIC → JPG and everything in between. Convert between JPG, PNG, WebP, and HEIC.</p>
-          <span class="tool-meta">Images</span>
+          <span class="tool-meta cat-pdf">PDF · Images</span>
         </a>
 
         <a class="tool-card" href="tools/split-pdf/">
-          <h2>Split PDF</h2>
+          <div class="card-top">
+            <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
+              <defs>
+                <linearGradient id="ic-spl" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff3b30"/><stop offset="1" stop-color="#b31313"/>
+                </linearGradient>
+                <linearGradient id="ic-spl-f" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff8a7e"/><stop offset="1" stop-color="#e24a3f"/>
+                </linearGradient>
+              </defs>
+              <rect x="8" y="6" width="48" height="66" rx="10" fill="url(#ic-spl)"/>
+              <path d="M44 6l12 12H44z" fill="url(#ic-spl-f)"/>
+              <path d="M32 26v30" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="3 4" opacity="0.95"/>
+              <path d="M26 40l-5 0m2-3l-3 3 3 3M38 40l5 0m-2-3l3 3-3 3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.8"/>
+            </svg>
+            <h2>Split PDF</h2>
+          </div>
           <p>One PDF into many — by single page, custom ranges, or fixed chunks.</p>
-          <span class="tool-meta">PDF</span>
+          <span class="tool-meta cat-pdf">PDF</span>
         </a>
 
-        <a class="tool-card" href="tools/favicon/">
-          <h2>Favicon Generator</h2>
-          <p>One image → favicon.ico, every PNG size, and the HTML snippet, zipped.</p>
-          <span class="tool-meta">Images</span>
+        <a class="tool-card" href="tools/compress-image/">
+          <div class="card-top">
+            <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
+              <defs>
+                <linearGradient id="ic-cmp" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#7B9EE8"/><stop offset="1" stop-color="#4A6BC4"/>
+                </linearGradient>
+                <clipPath id="ic-cmp-c"><rect x="4" y="4" width="56" height="56" rx="16"/></clipPath>
+              </defs>
+              <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#ic-cmp)"/>
+              <circle cx="15" cy="17" r="7" fill="#fff" opacity="0.9" clip-path="url(#ic-cmp-c)"/>
+              <path d="M0 60 L18 34 L28 46 L40 28 L70 60 Z" fill="#fff" opacity="0.75" clip-path="url(#ic-cmp-c)"/>
+            </svg>
+            <h2>Compress Image</h2>
+          </div>
+          <p>Shrink JPG, PNG, or WebP files. Adjust quality and max dimensions.</p>
+          <span class="tool-meta cat-image">Images</span>
+        </a>
+
+        <a class="tool-card" href="tools/convert-image/">
+          <div class="card-top">
+            <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
+              <defs>
+                <linearGradient id="ic-cnv" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#7B9EE8"/><stop offset="1" stop-color="#4A6BC4"/>
+                </linearGradient>
+                <clipPath id="ic-cnv-c"><rect x="4" y="4" width="56" height="56" rx="16"/></clipPath>
+              </defs>
+              <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#ic-cnv)"/>
+              <rect x="9" y="21" width="17" height="20" rx="3" fill="#fff" opacity="0.95" clip-path="url(#ic-cnv-c)"/>
+              <path d="M12 36 L17 28 L20 31 L23 25 L23 36 Z" fill="#4A6BC4" opacity="0.8" clip-path="url(#ic-cnv-c)"/>
+              <path d="M28 31 L36 31 M32 27 L36 31 L32 35" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <rect x="38" y="21" width="17" height="20" rx="3" fill="none" stroke="#fff" stroke-width="2" clip-path="url(#ic-cnv-c)"/>
+              <path d="M41 36 L46 28 L49 31 L52 25 L52 36 Z" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.9" clip-path="url(#ic-cnv-c)"/>
+            </svg>
+            <h2>Convert Image</h2>
+          </div>
+          <p>HEIC → JPG and everything in between. Convert between JPG, PNG, WebP, and HEIC.</p>
+          <span class="tool-meta cat-image">Images</span>
         </a>
 
         <a class="tool-card" href="tools/crop-image/">
-          <h2>Crop Image</h2>
+          <div class="card-top">
+            <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
+              <defs>
+                <linearGradient id="ic-crp" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#7B9EE8"/><stop offset="1" stop-color="#4A6BC4"/>
+                </linearGradient>
+                <clipPath id="ic-crp-c"><rect x="4" y="4" width="56" height="56" rx="16"/></clipPath>
+              </defs>
+              <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#ic-crp)"/>
+              <circle cx="14" cy="16" r="5" fill="#fff" opacity="0.4" clip-path="url(#ic-crp-c)"/>
+              <path d="M0 54 L16 34 L24 44 L34 28 L70 54 Z" fill="#fff" opacity="0.2" clip-path="url(#ic-crp-c)"/>
+              <rect x="15" y="17" width="34" height="28" rx="1" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.7" clip-path="url(#ic-crp-c)"/>
+              <path d="M23 17 L15 17 L15 25 M41 17 L49 17 L49 25 M23 45 L15 45 L15 37 M41 45 L49 45 L49 37" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <h2>Crop Image</h2>
+          </div>
           <p>Drag a selection with aspect-ratio presets and export the crop.</p>
-          <span class="tool-meta">Images</span>
+          <span class="tool-meta cat-image">Images</span>
+        </a>
+
+        <a class="tool-card" href="tools/qr/">
+          <div class="card-top">
+            <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
+              <defs>
+                <linearGradient id="ic-qr" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#5DBD8A"/><stop offset="1" stop-color="#2D7A56"/>
+                </linearGradient>
+                <clipPath id="ic-qr-c"><rect x="4" y="4" width="56" height="56" rx="16"/></clipPath>
+              </defs>
+              <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#ic-qr)"/>
+              <rect x="10" y="10" width="13" height="13" rx="2" fill="#fff" clip-path="url(#ic-qr-c)"/>
+              <rect x="13" y="13" width="7" height="7" rx="1" fill="url(#ic-qr)" clip-path="url(#ic-qr-c)"/>
+              <rect x="41" y="10" width="13" height="13" rx="2" fill="#fff" clip-path="url(#ic-qr-c)"/>
+              <rect x="44" y="13" width="7" height="7" rx="1" fill="url(#ic-qr)" clip-path="url(#ic-qr-c)"/>
+              <rect x="10" y="41" width="13" height="13" rx="2" fill="#fff" clip-path="url(#ic-qr-c)"/>
+              <rect x="13" y="44" width="7" height="7" rx="1" fill="url(#ic-qr)" clip-path="url(#ic-qr-c)"/>
+              <rect x="27" y="27" width="4" height="4" rx="1" fill="#fff"/>
+              <rect x="33" y="27" width="4" height="4" rx="1" fill="#fff" opacity="0.8"/>
+              <rect x="39" y="27" width="4" height="4" rx="1" fill="#fff"/>
+              <rect x="27" y="33" width="4" height="4" rx="1" fill="#fff" opacity="0.7"/>
+              <rect x="33" y="33" width="4" height="4" rx="1" fill="#fff"/>
+              <rect x="45" y="33" width="4" height="4" rx="1" fill="#fff"/>
+              <rect x="27" y="41" width="4" height="4" rx="1" fill="#fff"/>
+              <rect x="39" y="41" width="4" height="4" rx="1" fill="#fff" opacity="0.8"/>
+              <rect x="45" y="41" width="4" height="4" rx="1" fill="#fff"/>
+              <rect x="39" y="47" width="4" height="4" rx="1" fill="#fff"/>
+              <rect x="45" y="47" width="4" height="4" rx="1" fill="#fff" opacity="0.7"/>
+            </svg>
+            <h2>QR</h2>
+          </div>
+          <p>Make modern styled QR codes — rounded dots, custom colors, optional center logo.</p>
+          <span class="tool-meta cat-utility">Utility</span>
+        </a>
+
+        <a class="tool-card" href="tools/favicon/">
+          <div class="card-top">
+            <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
+              <defs>
+                <linearGradient id="ic-fav" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#5DBD8A"/><stop offset="1" stop-color="#2D7A56"/>
+                </linearGradient>
+                <clipPath id="ic-fav-c"><rect x="4" y="4" width="56" height="56" rx="16"/></clipPath>
+              </defs>
+              <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#ic-fav)"/>
+              <rect x="12" y="12" width="40" height="40" rx="6" fill="none" stroke="#fff" stroke-width="2" opacity="0.4" clip-path="url(#ic-fav-c)"/>
+              <rect x="20" y="20" width="24" height="24" rx="4" fill="none" stroke="#fff" stroke-width="2" opacity="0.7" clip-path="url(#ic-fav-c)"/>
+              <rect x="27" y="27" width="10" height="10" rx="2" fill="#fff" opacity="0.95" clip-path="url(#ic-fav-c)"/>
+            </svg>
+            <h2>Favicon Generator</h2>
+          </div>
+          <p>One image → favicon.ico, every PNG size, and the HTML snippet, zipped.</p>
+          <span class="tool-meta cat-utility">Utility</span>
         </a>
 
         <div class="tool-card placeholder" aria-disabled="true">
           <h2>More tools coming</h2>
           <p>OCR, Sign PDF, Rotate Image, and more.</p>
         </div>
-      </section>
 
+      </section>
     </main>
 
     <script src="shared/shell.js"></script>
