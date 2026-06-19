@@ -54,7 +54,7 @@
 
       .tool-card {
         display: block;
-        padding: 20px 24px 20px;
+        padding: 20px 24px;
         background: var(--panel);
         border: 1px solid var(--border);
         border-radius: 16px;
@@ -129,8 +129,8 @@
       }
 
       @media (prefers-color-scheme: light) {
-        .tool-meta.cat-pdf   { color: #c0251d; background: rgba(192, 37, 29, 0.08); }
-        .tool-meta.cat-image { color: var(--accent); background: rgba(91, 120, 212, 0.1); }
+        .tool-meta.cat-pdf     { color: #c0251d; background: rgba(192, 37, 29, 0.08); }
+        .tool-meta.cat-image   { color: var(--accent); background: rgba(91, 120, 212, 0.1); }
         .tool-meta.cat-utility { color: #2d7a56; background: rgba(45, 122, 86, 0.08); }
       }
 
@@ -173,7 +173,7 @@
             <h2>Pic2PDF</h2>
           </div>
           <p>Combine JPG, PNG, or WebP images into a single PDF.</p>
-          <span class="tool-meta cat-pdf">PDF · Images</span>
+          <span class="tool-meta cat-pdf">Images → PDF</span>
         </a>
 
         <a class="tool-card" href="tools/merge-pdf/">
@@ -194,7 +194,7 @@
             <h2>Merge PDF</h2>
           </div>
           <p>Combine PDFs and rearrange pages — drag any page anywhere, drop unwanted ones.</p>
-          <span class="tool-meta cat-pdf">PDF</span>
+          <span class="tool-meta cat-pdf">PDFs → PDF</span>
         </a>
 
         <a class="tool-card" href="tools/pdf2pic/">
@@ -218,7 +218,7 @@
             <h2>Pdf2Pic</h2>
           </div>
           <p>Extract PDF pages as PNG, JPG, or WebP images. Single page or zip of all.</p>
-          <span class="tool-meta cat-pdf">PDF · Images</span>
+          <span class="tool-meta cat-pdf">PDF → Images</span>
         </a>
 
         <a class="tool-card" href="tools/split-pdf/">
@@ -240,7 +240,7 @@
             <h2>Split PDF</h2>
           </div>
           <p>One PDF into many — by single page, custom ranges, or fixed chunks.</p>
-          <span class="tool-meta cat-pdf">PDF</span>
+          <span class="tool-meta cat-pdf">PDF → PDFs</span>
         </a>
 
         <a class="tool-card" href="tools/compress-image/">
@@ -259,7 +259,7 @@
             <h2>Compress Image</h2>
           </div>
           <p>Shrink JPG, PNG, or WebP files. Adjust quality and max dimensions.</p>
-          <span class="tool-meta cat-image">Images</span>
+          <span class="tool-meta cat-image">Image → Smaller</span>
         </a>
 
         <a class="tool-card" href="tools/convert-image/">
@@ -281,7 +281,7 @@
             <h2>Convert Image</h2>
           </div>
           <p>HEIC → JPG and everything in between. Convert between JPG, PNG, WebP, and HEIC.</p>
-          <span class="tool-meta cat-image">Images</span>
+          <span class="tool-meta cat-image">JPG / PNG / WebP / HEIC</span>
         </a>
 
         <a class="tool-card" href="tools/crop-image/">
@@ -302,7 +302,7 @@
             <h2>Crop Image</h2>
           </div>
           <p>Drag a selection with aspect-ratio presets and export the crop.</p>
-          <span class="tool-meta cat-image">Images</span>
+          <span class="tool-meta cat-image">Image → Crop</span>
         </a>
 
         <a class="tool-card" href="tools/qr/">
@@ -336,7 +336,7 @@
             <h2>QR</h2>
           </div>
           <p>Make modern styled QR codes — rounded dots, custom colors, optional center logo.</p>
-          <span class="tool-meta cat-utility">Utility</span>
+          <span class="tool-meta cat-utility">URL → QR</span>
         </a>
 
         <a class="tool-card" href="tools/favicon/">
@@ -356,7 +356,7 @@
             <h2>Favicon Generator</h2>
           </div>
           <p>One image → favicon.ico, every PNG size, and the HTML snippet, zipped.</p>
-          <span class="tool-meta cat-utility">Utility</span>
+          <span class="tool-meta cat-utility">Image → Favicon</span>
         </a>
 
         <div class="tool-card placeholder" aria-disabled="true">
