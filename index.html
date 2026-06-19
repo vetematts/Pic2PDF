@@ -32,6 +32,13 @@
         margin-bottom: clamp(40px, 6vw, 64px);
       }
 
+      .hero-crane {
+        display: block;
+        height: 80px;
+        width: auto;
+        margin: 0 auto 20px;
+      }
+
       .hero h1 {
         margin: 0;
         font-size: clamp(2.4rem, 6vw, 3.6rem);
@@ -149,6 +156,25 @@
   <body>
     <main class="wrap">
       <header class="hero">
+        <svg class="hero-crane" viewBox="0 0 120 100" role="img" aria-label="Origami crane" xmlns="http://www.w3.org/2000/svg">
+          <!-- left wing -->
+          <polygon points="5,55 45,45 60,95" fill="#9FB3EC"/>
+          <!-- right wing -->
+          <polygon points="115,55 75,45 60,95" fill="#B8C9F3"/>
+          <!-- left body -->
+          <polygon points="45,45 60,22 60,95" fill="#8AA8E6"/>
+          <!-- right body -->
+          <polygon points="75,45 60,22 60,95" fill="#C0CFEF"/>
+          <!-- tail -->
+          <polygon points="45,45 40,4 60,22" fill="#7B9EE8"/>
+          <!-- head -->
+          <polygon points="75,45 82,4 60,22" fill="#B0C5F5"/>
+          <!-- subtle fold lines -->
+          <polyline points="5,55 45,45 60,22 75,45 115,55" fill="none" stroke="#ffffff" stroke-width="0.8" opacity="0.3"/>
+          <line x1="60" y1="22" x2="60" y2="95" stroke="#ffffff" stroke-width="0.8" opacity="0.3"/>
+          <line x1="45" y1="45" x2="60" y2="95" stroke="#ffffff" stroke-width="0.8" opacity="0.3"/>
+          <line x1="75" y1="45" x2="60" y2="95" stroke="#ffffff" stroke-width="0.8" opacity="0.3"/>
+        </svg>
         <h1>Origami Docs</h1>
         <p>Fast, private, browser-only file tools. Nothing leaves your device.</p>
       </header>
