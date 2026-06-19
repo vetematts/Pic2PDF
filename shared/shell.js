@@ -46,11 +46,21 @@
 
   function buildHeader(options) {
     const rootHref = options.rootHref || "./";
-    const brand = el(
-      "a",
-      { className: "origami-nav-brand", href: rootHref },
-      ["Origami Docs"]
-    );
+    const brand = el("a", { className: "origami-nav-brand", href: rootHref }, []);
+    brand.innerHTML =
+      '<svg class="origami-nav-crane" viewBox="0 0 120 100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">' +
+        '<polygon points="5,55 45,45 60,95" fill="#9FB3EC"/>' +
+        '<polygon points="115,55 75,45 60,95" fill="#B8C9F3"/>' +
+        '<polygon points="45,45 60,22 60,95" fill="#8AA8E6"/>' +
+        '<polygon points="75,45 60,22 60,95" fill="#C0CFEF"/>' +
+        '<polygon points="45,45 40,4 60,22" fill="#7B9EE8"/>' +
+        '<polygon points="75,45 82,4 60,22" fill="#B0C5F5"/>' +
+        '<polyline points="5,55 45,45 60,22 75,45 115,55" fill="none" stroke="#ffffff" stroke-width="0.8" opacity="0.3"/>' +
+        '<line x1="60" y1="22" x2="60" y2="95" stroke="#ffffff" stroke-width="0.8" opacity="0.3"/>' +
+        '<line x1="45" y1="45" x2="60" y2="95" stroke="#ffffff" stroke-width="0.8" opacity="0.3"/>' +
+        '<line x1="75" y1="45" x2="60" y2="95" stroke="#ffffff" stroke-width="0.8" opacity="0.3"/>' +
+      '</svg>' +
+      'Origami Docs';
 
     const items = [brand];
     if (options.tool) {
