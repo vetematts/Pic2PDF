@@ -47,6 +47,7 @@ html {
 
 body {
   margin: 0;
+  padding-top: 53px;
   font-family: "Outfit", system-ui, sans-serif;
   color: var(--ink);
   line-height: 1.5;
@@ -116,8 +117,10 @@ body {
  * -------------------------------------------------------------------------- */
 
 .origami-nav {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
