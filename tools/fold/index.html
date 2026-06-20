@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#151515" />
+    <meta
+      name="description"
+      content="Combine images and PDFs into one PDF. Drag to reorder. Nothing leaves your device."
+    />
+    <link rel="manifest" href="../../manifest.json" />
+    <title>Fold · Origami Docs</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/icons/icon-192.png" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/icons/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="../../shared/styles.css" />
+    <link rel="stylesheet" href="../../shared/tool-ui.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="hero">
+        <div class="brand">
+          <span class="badge" aria-hidden="true">
+            <svg class="logo" viewBox="0 0 64 80" role="img" aria-label="FLD">
+              <defs>
+                <linearGradient id="pdfBody" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff3b30" />
+                  <stop offset="1" stop-color="#b31313" />
+                </linearGradient>
+                <linearGradient id="pdfFold" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff8a7e" />
+                  <stop offset="1" stop-color="#e24a3f" />
+                </linearGradient>
+              </defs>
+              <!-- back page -->
+              <rect x="14" y="6" width="42" height="58" rx="8" fill="url(#pdfBody)" opacity="0.4" />
+              <!-- front page -->
+              <rect x="8" y="12" width="42" height="58" rx="8" fill="url(#pdfBody)" />
+              <path d="M40 12l10 10H40z" fill="url(#pdfFold)" />
+              <path d="M16 40h26M16 50h26" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" opacity="0.9" />
+              <text x="29" y="78" text-anchor="middle" font-size="11" font-family="Outfit, system-ui, sans-serif" font-weight="800" fill="#ffffff">FLD</text>
+            </svg>
+          </span>
+          <h1>Fold</h1>
+        </div>
+        <p>Combine images and PDFs into one PDF. Nothing leaves your device.</p>
+      </header>
+
+      <section class="panel">
+        <div id="dropZone" class="drop">
+          <label class="file-btn">
+            <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp,application/pdf,.pdf" multiple />
+            Add files
+          </label>
+          <p id="emptyState" class="empty-state">Drop images or PDFs — mix freely</p>
+          <p class="hint">JPG · PNG · WebP · PDF · drag to reorder · <kbd>⌘E</kbd> to export</p>
+        </div>
+
+        <div class="controls sticky-bar" id="controls">
+          <div class="controls-core">
+            <button id="advancedToggle" class="ghost" type="button" aria-expanded="false">Advanced</button>
+          </div>
+          <div class="controls-actions">
+            <label for="fileNameInput" class="field-tag">Filename</label>
+            <input id="fileNameInput" class="name-input" type="text" placeholder="fold.pdf" />
+            <button id="exportBtn" class="primary" disabled>Export PDF</button>
+            <button id="clearBtn" class="ghost" disabled>Clear</button>
+          </div>
+          <div class="controls-advanced">
+            <div class="advanced-inner">
+              <p class="advanced-note">Image pages only</p>
+              <div class="select inline advanced">
+                <label for="pageSize">Page size</label>
+                <select id="pageSize">
+                  <option value="auto" selected>Auto</option>
+                  <option value="a4">A4</option>
+                  <option value="letter">Letter</option>
+                </select>
+              </div>
+              <div class="select advanced">
+                <label for="fitMode">Fit mode</label>
+                <select id="fitMode">
+                  <option value="contain" selected>Contain</option>
+                  <option value="cover">Cover</option>
+                </select>
+              </div>
+              <div class="select advanced">
+                <label for="margin">Margin</label>
+                <select id="margin">
+                  <option value="0" selected>0 pt</option>
+                  <option value="12">12 pt</option>
+                  <option value="24">24 pt</option>
+                  <option value="36">36 pt</option>
+                </select>
+              </div>
+              <div class="select color advanced">
+                <label for="pageBg">Page color</label>
+                <input id="pageBg" type="color" value="#ffffff" />
+              </div>
+              <div class="select advanced">
+                <label for="downscale">Downscale</label>
+                <select id="downscale">
+                  <option value="0">Original</option>
+                  <option value="3000">Max 3000px</option>
+                  <option value="2000" selected>Max 2000px</option>
+                  <option value="1200">Max 1200px</option>
+                </select>
+              </div>
+              <div class="select range advanced">
+                <label for="quality">Quality <span id="qualityValue">0.90</span></label>
+                <input id="quality" type="range" min="0.6" max="1" step="0.05" value="0.9" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="grid" class="fold-grid" aria-live="polite"></div>
+
+        <div class="status">
+          <div class="status-left">
+            <span id="count">0 pages</span>
+            <progress id="progress" value="0" max="1" hidden></progress>
+          </div>
+          <div class="status-right">
+            <span id="status"></span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="../../shared/vendor/pdf-lib.min.js"></script>
+    <script src="../../shared/vendor/pdfjs/pdf.min.js"></script>
+    <script src="app.js"></script>
+    <script src="../../shared/shell.js"></script>
+    <script>
+      Shell.mount({ tool: "Fold", rootHref: "../../" });
+    </script>
+  </body>
+</html>

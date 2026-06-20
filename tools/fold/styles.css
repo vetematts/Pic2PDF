@@ -1,0 +1,105 @@
+/* Fold — tool-specific layout */
+
+.wrap { max-width: 920px; }
+
+.fold-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.fold-tile {
+  position: relative;
+  aspect-ratio: 1 / 1.41;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  overflow: hidden;
+  cursor: grab;
+  transition: border-color 0.12s ease, transform 0.12s ease;
+}
+
+.fold-tile:active { cursor: grabbing; }
+.fold-tile.dragging { opacity: 0.4; }
+.fold-tile.drop-target { border-color: var(--accent); transform: scale(1.02); }
+
+.fold-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: #fff;
+  pointer-events: none;
+}
+
+.fold-thumb.rotated-90  { transform: rotate(90deg)  scale(0.71); }
+.fold-thumb.rotated-180 { transform: rotate(180deg); }
+.fold-thumb.rotated-270 { transform: rotate(270deg) scale(0.71); }
+
+.fold-num {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  user-select: none;
+  pointer-events: none;
+}
+
+.fold-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 8px 6px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.7));
+  color: #fff;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.fold-actions {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.fold-tile:hover .fold-actions,
+.fold-tile:focus-within .fold-actions { opacity: 1; }
+
+.fold-action {
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  width: 24px;
+  height: 24px;
+  font-size: 0.9rem;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.fold-action:hover { background: rgba(0,0,0,0.9); }
+
+.advanced-note {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-style: italic;
+}
