@@ -46,24 +46,28 @@
       }
 
       /* wings rotate up around their body-connection edge */
-      .hero-crane:hover .crane-wl {
-        transform: rotate(-30deg);
+      .crane-wl {
+        transform: rotate(0deg);
         transform-origin: 72% 0%;
       }
-      .hero-crane:hover .crane-wr {
-        transform: rotate(30deg);
+      .crane-wr {
+        transform: rotate(0deg);
         transform-origin: 28% 0%;
       }
+      .hero-crane:hover .crane-wl { transform: rotate(-30deg); }
+      .hero-crane:hover .crane-wr { transform: rotate(30deg); }
 
       /* tail and head spread slightly outward */
-      .hero-crane:hover .crane-tail {
-        transform: rotate(-18deg);
+      .crane-tail {
+        transform: rotate(0deg);
         transform-origin: 100% 100%;
       }
-      .hero-crane:hover .crane-head {
-        transform: rotate(18deg);
+      .crane-head {
+        transform: rotate(0deg);
         transform-origin: 0% 100%;
       }
+      .hero-crane:hover .crane-tail { transform: rotate(-18deg); }
+      .hero-crane:hover .crane-head { transform: rotate(18deg); }
 
       .hero h1 {
         margin: 0;
