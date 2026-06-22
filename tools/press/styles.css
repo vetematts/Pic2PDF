@@ -1,0 +1,108 @@
+/* Press — tool-specific layout */
+
+.wrap { max-width: 920px; }
+
+/* ── Crop stage ─────────────────────────────────────────────────────────── */
+
+.crop-stage {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  margin: 0 auto;
+  line-height: 0;
+  user-select: none;
+  touch-action: none;
+}
+
+.crop-img {
+  max-width: 100%;
+  max-height: 64vh;
+  display: block;
+  border-radius: 10px;
+}
+
+.crop-box {
+  position: absolute;
+  border: 1px solid #fff;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+  cursor: move;
+}
+
+.crop-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+  background-size: 33.333% 33.333%;
+  background-position: 0 33.333%, 33.333% 0;
+}
+
+.handle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.handle.n  { top: -7px; left: 50%; margin-left: -7px; cursor: ns-resize; }
+.handle.s  { bottom: -7px; left: 50%; margin-left: -7px; cursor: ns-resize; }
+.handle.e  { right: -7px; top: 50%; margin-top: -7px; cursor: ew-resize; }
+.handle.w  { left: -7px; top: 50%; margin-top: -7px; cursor: ew-resize; }
+.handle.ne { top: -7px; right: -7px; cursor: nesw-resize; }
+.handle.nw { top: -7px; left: -7px; cursor: nwse-resize; }
+.handle.se { bottom: -7px; right: -7px; cursor: nwse-resize; }
+.handle.sw { bottom: -7px; left: -7px; cursor: nesw-resize; }
+
+/* ── Batch list ──────────────────────────────────────────────────────────── */
+
+.items { display: grid; gap: 10px; }
+
+.item-tile {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.item-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  display: block;
+}
+
+.item-info { min-width: 0; }
+
+.item-name {
+  font-size: 0.88rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-meta {
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-top: 2px;
+}
+
+.item-remove {
+  border-color: #4a2b2b;
+  color: #ff8a7a;
+  background: transparent;
+}
+
+.item-remove:hover:not(:disabled) { transform: none; }
