@@ -84,52 +84,14 @@
       }
 
       .tools {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-      }
-
-      .cat-row {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin: 32px 0 14px;
-      }
-
-      .cat-row:first-child { margin-top: 0; }
-
-      .cat-row::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: var(--border);
-      }
-
-      .cat-label {
-        font-size: 0.7rem;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 3px 10px;
-        border-radius: 999px;
-        white-space: nowrap;
-      }
-
-      .cat-label.cat-pdf     { color: #ff6b5e; background: rgba(255, 59, 48, 0.12); }
-      .cat-label.cat-image   { color: var(--accent); background: rgba(159, 179, 236, 0.14); }
-      .cat-label.cat-utility { color: #5dbd8a; background: rgba(93, 189, 138, 0.12); }
-
-      @media (prefers-color-scheme: light) {
-        .cat-label.cat-pdf     { color: #c0251d; background: rgba(192, 37, 29, 0.08); }
-        .cat-label.cat-image   { color: var(--accent); background: rgba(91, 120, 212, 0.1); }
-        .cat-label.cat-utility { color: #2d7a56; background: rgba(45, 122, 86, 0.08); }
-      }
-
-      .tool-group {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         gap: 16px;
       }
+
+      .tool-card.cat-pdf     { border-top: 3px solid rgba(255, 59, 48, 0.55); }
+      .tool-card.cat-image   { border-top: 3px solid rgba(159, 179, 236, 0.55); }
+      .tool-card.cat-utility { border-top: 3px solid rgba(93, 189, 138, 0.55); }
 
       .tool-card {
         display: block;
@@ -242,10 +204,7 @@
 
       <section class="tools" aria-label="Available tools">
 
-        <div class="cat-row"><span class="cat-label cat-pdf">PDF</span></div>
-        <div class="tool-group">
-
-        <a class="tool-card" href="tools/fold/">
+        <a class="tool-card cat-pdf" href="tools/fold/">
           <div class="card-top">
             <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
               <defs>
@@ -267,7 +226,7 @@
           <span class="tool-meta cat-pdf">Images + PDFs → PDF</span>
         </a>
 
-        <a class="tool-card" href="tools/unfold/">
+        <a class="tool-card cat-pdf" href="tools/unfold/">
           <div class="card-top">
             <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
               <defs>
@@ -290,11 +249,7 @@
           <span class="tool-meta cat-pdf">PDF → Images or PDFs</span>
         </a>
 
-        </div>
-        <div class="cat-row"><span class="cat-label cat-image">Images</span></div>
-        <div class="tool-group">
-
-        <a class="tool-card" href="tools/press/">
+        <a class="tool-card cat-image" href="tools/press/">
           <div class="card-top">
             <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
               <defs>
@@ -319,11 +274,7 @@
           <span class="tool-meta cat-image">Crop · Convert · Compress</span>
         </a>
 
-        </div>
-        <div class="cat-row"><span class="cat-label cat-utility">Utilities</span></div>
-        <div class="tool-group">
-
-        <a class="tool-card" href="tools/qr/">
+        <a class="tool-card cat-utility" href="tools/qr/">
           <div class="card-top">
             <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
               <defs>
@@ -357,7 +308,7 @@
           <span class="tool-meta cat-utility">URL → QR Code</span>
         </a>
 
-        <a class="tool-card" href="tools/favicon/">
+        <a class="tool-card cat-utility" href="tools/favicon/">
           <div class="card-top">
             <svg class="card-icon" viewBox="0 0 64 80" aria-hidden="true">
               <defs>
@@ -377,7 +328,6 @@
           <span class="tool-meta cat-utility">Image → Favicon Set</span>
         </a>
 
-        </div>
 
       </section>
     </main>
