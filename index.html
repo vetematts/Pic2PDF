@@ -185,6 +185,69 @@
         border-color: var(--border);
         transform: none;
       }
+
+      /* ── Category filter pills ───────────────────────────────────────────── */
+
+      .filter-bar {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 24px;
+      }
+
+      .filter-pill {
+        padding: 6px 16px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
+        letter-spacing: 0.01em;
+      }
+
+      .filter-pill:hover { color: var(--ink); border-color: var(--ink); }
+
+      .filter-pill[data-cat="all"].active {
+        background: var(--ink);
+        color: var(--bg);
+        border-color: var(--ink);
+      }
+
+      .filter-pill[data-cat="cat-pdf"].active {
+        background: rgba(255, 59, 48, 0.15);
+        color: #ff6b5e;
+        border-color: rgba(255, 59, 48, 0.45);
+      }
+
+      .filter-pill[data-cat="cat-image"].active {
+        background: rgba(159, 179, 236, 0.15);
+        color: var(--accent);
+        border-color: rgba(159, 179, 236, 0.45);
+      }
+
+      .filter-pill[data-cat="cat-utility"].active {
+        background: rgba(93, 189, 138, 0.15);
+        color: #5dbd8a;
+        border-color: rgba(93, 189, 138, 0.45);
+      }
+
+      @media (prefers-color-scheme: light) {
+        .filter-pill[data-cat="cat-pdf"].active    { color: #c0251d; }
+        .filter-pill[data-cat="cat-image"].active  { color: var(--accent); }
+        .filter-pill[data-cat="cat-utility"].active{ color: #2d7a56; }
+      }
+
+      .tool-card[data-hidden] { display: none; }
+
+      @media (max-width: 500px) {
+        .hero-crane { height: 72px; }
+        .hero { margin-bottom: clamp(28px, 5vw, 40px); }
+        .tools { grid-template-columns: 1fr; }
+      }
     </style>
   </head>
   <body>
@@ -201,6 +264,13 @@
         <h1>Origami Docs</h1>
         <p>Fast, private, browser-only file tools. Nothing leaves your device.</p>
       </header>
+
+      <nav class="filter-bar" aria-label="Filter tools by category">
+        <button class="filter-pill active" data-cat="all">All</button>
+        <button class="filter-pill" data-cat="cat-pdf">PDF</button>
+        <button class="filter-pill" data-cat="cat-image">Images</button>
+        <button class="filter-pill" data-cat="cat-utility">Utilities</button>
+      </nav>
 
       <section class="tools" aria-label="Available tools">
 
@@ -335,6 +405,25 @@
     <script src="shared/shell.js"></script>
     <script>
       Shell.mount();
+
+      (function () {
+        const pills = document.querySelectorAll(".filter-pill");
+        const cards = document.querySelectorAll(".tool-card");
+        pills.forEach(pill => {
+          pill.addEventListener("click", () => {
+            pills.forEach(p => p.classList.remove("active"));
+            pill.classList.add("active");
+            const cat = pill.dataset.cat;
+            cards.forEach(card => {
+              if (cat === "all" || card.classList.contains(cat)) {
+                delete card.dataset.hidden;
+              } else {
+                card.dataset.hidden = "";
+              }
+            });
+          });
+        });
+      })();
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker.register("./sw.js").catch(() => {});
